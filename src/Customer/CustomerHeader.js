@@ -3,7 +3,7 @@ import logoMarket from "../Images/Logo_MarketPlace.png"
 import iconSearch from "../Images/Interface_Search.svg"
 import iconProfile from "../Images/Icon-profile.svg";
 import iconCart  from "../Images/Icon-cart.svg";
-import '../Styles/StyleCostumer.css';
+
 
 
 

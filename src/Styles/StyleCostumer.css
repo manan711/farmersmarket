@@ -1,3 +1,4 @@
+/* Customer header */
 
 .CustomerHeader{
     display: flex;
@@ -85,4 +86,43 @@
     border-style: none;
     border-radius: 4px;
     font-size: medium;
+    font-weight: bold;
 }
+
+
+/* Customer menu */
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #58F4D8;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  li a:hover {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+
+  }
+
+  #Img-Line{
+    width: 57%;
+    padding-top: 193%;
+
+  }
+
