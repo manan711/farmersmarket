@@ -151,8 +151,19 @@ ul {
     border-radius: 4px;
     align-items: center;
     width: 16%;
-    height: 283px;
+    height: 329px;
     background: white;
     justify-content: center;
     margin-left: 2%;
+}
+
+.btnItem{
+    background: #58F4D8;
+    border-radius: 4px;
+    border: none;
+    font-size: medium;
+    width: 66%;
+    height: 40px;
+    color: black;
+    font-weight: bold;
 }
