@@ -126,3 +126,33 @@ ul {
 
   }
 
+
+
+/* CustomerListOfProduts */
+
+#ListOfProducts{
+    background-color: #F3F1F1;
+    height: max-content;
+    min-height: 1024px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.blockItem{
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-radius: 4px;
+    align-items: center;
+    width: 15%;
+    height: 283px;
+    background: white;
+    justify-content: center;
+    margin-left: 2%;
+}
