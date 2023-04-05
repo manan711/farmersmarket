@@ -11,7 +11,7 @@ class Customer extends Component  {
         super(props);
         this.state = {
             user_id: '',
-            userName: 'Debora',
+            userName: '',
             hasSession: false
         }; 
     }
@@ -21,8 +21,7 @@ class Customer extends Component  {
     async validateSession () {
         var that = this;
         if(sessionStorage.getItem("id")){
-            const id = sessionStorage.getItem("id")
-            await that.setState({user_id: id, hasSession: true});
+            await that.setState({user_id: sessionStorage.getItem("id"),userName: sessionStorage.getItem("name") ,hasSession: true});
             
             this.getUser();
         }

@@ -28,8 +28,8 @@ class Login extends Component {
             'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password
+                Email: this.state.email,
+                Password: this.state.password
             }) 
         })
         .then(function (response) {
@@ -37,7 +37,8 @@ class Login extends Component {
         })
         .then(function (data) {
             if(data.status){
-                sessionStorage.setItem("id", data.user_id);
+                sessionStorage.setItem("id", data.UserId);
+                sessionStorage.setItem("name", data.FirstName);
                 console.log(data);
                that.setState({...that.state, message: data.message})
                window.location.replace("/");
@@ -63,7 +64,9 @@ render() {
                 <button type="submit">Login</button>
                 <p>{this.state.message}</p>
             </form>
-            <Link className='linkTo' to="/www/createAccount">Create Account</Link>
+            <Link className='linkTo' to="/createAccount">Create Account</Link>
+            {/* <Link className='linkTo' to="/www/createAccount">Create Account</Link> */}
+
         </div>
     );
     }
