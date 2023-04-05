@@ -1,4 +1,5 @@
 import React, {Component}from "react";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CustomerHeader from './CustomerHeader';
 import CustomerMenu from './CustomerMenu';
 import CustomerListOfProduts from "./CustomerListOfProduts";
@@ -58,7 +59,11 @@ class Customer extends Component  {
     return(
         <>
             <CustomerHeader name = {this.state.userName} session = {this.state.hasSession}/>
-            <CustomerMenu/>
+            {/* <BrowserRouter>
+                <Routes> */}
+                    <CustomerMenu session = {this.state.hasSession}/>
+                {/* </Routes>
+            </BrowserRouter> */}
             <CustomerListOfProduts/>
         </>
         

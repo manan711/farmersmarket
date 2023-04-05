@@ -9,14 +9,13 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Authorization
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
-
   $data = json_decode(file_get_contents("php://input"));
     
-  $email = $data->email;
-  $password = $data->password; 
+  $email = $data->Email;
+  $password = $data->Password; 
 
   // $hash = password_hash($password, PASSWORD_DEFAULT);
-  $query = "SELECT * FROM users WHERE email = ? AND password = ?";
+  $query = "SELECT * FROM users WHERE Email = ? AND Password = ?";
   
   $stmt = $conn->prepare($query);
   $stmt->bind_param("ss", $email, $password);
@@ -26,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
   $user = new stdClass();
   if ($row) {   
-      $user->user_id = $row['user_id'];
-      $user->username = $row['name'];
-      $user->email = $row['email'];
-      $user->password = $row['password'];
+      $user->UserId = $row['UserId'];
+      $user->FirstName = $row['FirstName'];
+      $user->Email = $row['Email'];
+      $user->Password = $row['Password'];
       $user->message = "Login successful";
       $user->status = true;
    

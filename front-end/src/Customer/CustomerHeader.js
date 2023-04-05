@@ -10,9 +10,12 @@ function CustomerHeader  (props) {
    function handleLogin(){
       window.location.replace("login");
    }
-   
+
    function UseName(props) {
-   return <><img src={iconProfile} id="Icon-Profile" alt="Icon-Profile"/> <p>Hello, {props.name}</p> </>
+   return <>
+            <img src={iconProfile} id="Icon-Profile" alt="Icon-Profile"/> 
+            <p>Hello, {props.name}</p> 
+         </>
    }
     
    function UseButtonLogin() {
