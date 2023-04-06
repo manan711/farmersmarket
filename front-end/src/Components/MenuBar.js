@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../Styles/StyleCostumer.css';
+import '../Styles/menuBar.css';
 import imgLine from '../Images/Line.svg';
+import { Container } from "./MenuBarsStyle";
 
 
 function logOut(){
@@ -14,10 +15,11 @@ function Greeting(props) {
   const isLoggedIn = props.isLoggedIn;
   if (isLoggedIn) {
     return <>
-          <li className="listMenu"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li> 
-          <li className="listMenu" ><a><Link to="/myAccount">My Account</Link></a></li>
-          <li className="listMenu"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li> 
-          <li className="listMenu" ><a><Link onClick={logOut}to="/">Log out</Link></a></li>
+          <li className="menuItem" ><Link to="/myAccount">My Account</Link></li>
+          <li className="menuItem"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li> 
+          <li className="menuItem" ><Link to="/addProduct">Register Product</Link></li>
+          <li className="menuItem"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li> 
+          <li className="menuItem" ><Link onClick={logOut}to="/">Log out</Link></li>
           </>;
   }
 };
@@ -33,20 +35,26 @@ class MenuBar extends Component  {
 render() {
 
     return(
-        <div>
-             <ul>
-                <li className="listMenu" ><a> Fruit &#38; Vegetables </a></li>
-                <li className="listMenu"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
-                <li className="listMenu"><a>Dairy &#38; Eggs</a></li>
-                <li className="listMenu"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
-                <li className="listMenu"><a>Pantry</a></li>
-                <li className="listMenu" ><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
-                <li className="listMenu"><a>Meat</a></li>
-                <li className="listMenu"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
-                <li className="listMenu" ><a>See all products</a></li>
-                <Greeting isLoggedIn={this.props.session} />
+        <Container>
+             <ul className='menuList'>
+              <div id='menuItemLogout'>
+              <li className="menuItem" ><Link to="/productFeed" state={{ categoryType: "All" }}>All</Link></li>
+                <li className="menuItem"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
+                <li className="menuItem" ><Link to="/productFeed" state={{ categoryType: "Fruit" }}>Fruit</Link></li>
+                <li className="menuItem"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
+                <li className="menuItem" ><Link to="/productFeed" state={{ categoryType: "Vegetables" }}>Vegetables</Link></li>
+                {/* <li className="menuItem"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
+                <li className="menuItem"><a href="!#">Dairy &#38; Eggs</a></li>
+                <li className="menuItem"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
+                <li className="menuItem"><a href="!#">Pantry</a></li>
+                <li className="menuItem" ><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
+                <li className="menuItem"><a href="!#">Meat</a></li> */}
+              </div>
+                <div id='menuItemLogin'>
+                  <Greeting isLoggedIn={this.props.session} />
+                </div>
              </ul>
-        </div>
+        </Container>
     );
 }
 }

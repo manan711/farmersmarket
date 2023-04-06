@@ -39,7 +39,7 @@ class MyAccount extends Component {
         .then( (response) => {
             return response.json()
         }).then( (data) => {
-            console.log(data);
+            
             that.setState({
                 firstName: data.FirstName,
                 lastName: data.LastName,

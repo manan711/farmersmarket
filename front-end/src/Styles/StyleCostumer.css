@@ -12,7 +12,6 @@
     width: 15%;
 }
 
-
 #seacrhProducts , #informationUser{
     display: flex;
     align-items: flex-end;
@@ -92,82 +91,8 @@
 
 /* Customer menu */
 
-ul {
-    display: flex;
-    align-items: center;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #14d7b3;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  
-/* .listMenu{
-    float: left;
-} */
-  
-  .listMenu a {
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 8px 13px;
-    text-decoration: none;
-    font-weight: bold;
-  }
 
-  li a:hover {
-    background-color: white;
-    color: black;
-    font-weight: bold;
-
-  }
-
-  #Img-Line{
-    width: 57%;
-    padding-top: 193%;
-
-  }
 
 
 
 /* CustomerListOfProduts */
-
-#ListOfProducts{
-    background-color: #F3F1F1;
-    height: max-content;
-    min-height: 1024px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    padding-left: 5%;
-    padding-top: 5%;
-}
-
-.blockItem{
-    display: flex;
-    align-content: center;
-    flex-direction: column;
-    flex-wrap: wrap;
-    border-radius: 4px;
-    align-items: center;
-    width: 16%;
-    height: 329px;
-    background: white;
-    justify-content: center;
-    margin-left: 2%;
-}
-
-.btnItem{
-    background: #58F4D8;
-    border-radius: 4px;
-    border: none;
-    font-size: medium;
-    width: 66%;
-    height: 40px;
-    color: black;
-    font-weight: bold;
-}

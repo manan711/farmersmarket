@@ -1,0 +1,38 @@
+.menuList {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #7d7e8d;
+    /* background-color: #14d7b3; */
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  
+/* .listMenu{
+    float: left;
+} */
+  
+  .menuItem a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 8px 13px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .menuItem a:hover {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+
+  }
+
+  #Img-Line{
+    width: 57%;
+    padding-top: 193%;
+
+  }

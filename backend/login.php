@@ -8,7 +8,7 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Authorization
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  
+
   $data = json_decode(file_get_contents("php://input"));
     
   $email = $data->Email;
@@ -29,8 +29,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $user->FirstName = $row['FirstName'];
       $user->Email = $row['Email'];
       $user->Password = $row['Password'];
+      $user->TypeAccount = $row['TypeAccount'];
       $user->message = "Login successful";
       $user->status = true;
+      if($user->TypeAccount == "Customer"){
+        
+        $query = "SELECT CustomerID FROM customer WHERE UserId = ?";
+        
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $user->UserId);
+        $stmt->execute();
+        $result = $stmt->get_result(); 
+        $row = $result->fetch_assoc(); 
+        $user->accountID = $row['CustomerID'];
+      }else if($user->TypeAccount == "Farmer"){
+        $query = "SELECT FarmerID FROM farmer WHERE UserId = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $user->UserId);
+        $stmt->execute();
+        $result = $stmt->get_result(); 
+        $row = $result->fetch_assoc(); 
+        $user->accountID = $row['FarmerID'];
+      }
    
       $myJSON = json_encode($user);
       echo $myJSON;

@@ -14,7 +14,6 @@ function App() {
       <Route exact path="/login" element={<Login/>} />
       <Route path="/createAccount" element={<CreateAccount />} /> 
       <Route path="/myAccount" element={<MyAccount />} /> 
-
     </Routes>
   </BrowserRouter>
     // <Router>

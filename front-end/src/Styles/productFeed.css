@@ -1,0 +1,17 @@
+.productFeedPage{
+    background-color: #F3F1F1;
+    width: 100%;
+}
+
+.productList{
+    width: calc(100% + 15px);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+}
+
+.productItem{
+    display: inline-grid;
+}

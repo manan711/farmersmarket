@@ -1,0 +1,37 @@
+
+#product{
+    background-color: #F3F1F1;
+    min-height: 1024px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.blockItem{
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-radius: 4px;
+    align-items: center;
+    width: 16%;
+    height: 329px;
+    background: white;
+    justify-content: center;
+    margin-left: 2%;
+}
+
+.btnItem{
+    background: #58F4D8;
+    border-radius: 4px;
+    border: none;
+    font-size: medium;
+    width: 66%;
+    height: 40px;
+    color: black;
+    font-weight: bold;
+}
