@@ -1,20 +1,36 @@
-import React from "react";
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../Styles/StyleCostumer.css';
 import imgLine from '../Images/Line.svg';
 
 
-function CustomerMenu (props) {
+function logOut(){
+    sessionStorage.clear();
+    alert('session ended');
+    window.location.replace("/");
+}
 
-    function Greeting(props) {
-        const isLoggedIn = props.isLoggedIn;
-        if (isLoggedIn) {
-          return <>
-                <li className="listMenu"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li> 
-                <li className="listMenu" ><a><Link to="/myAccount">My Account</Link></a></li>
-                </>;
-        }
-      }
+function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <>
+          <li className="listMenu"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li> 
+          <li className="listMenu" ><a><Link to="/myAccount">My Account</Link></a></li>
+          <li className="listMenu"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li> 
+          <li className="listMenu" ><a><Link onClick={logOut}to="/">Log out</Link></a></li>
+          </>;
+  }
+};
+
+class MenuBar extends Component  {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    }; 
+  }
+  
+render() {
 
     return(
         <div>
@@ -28,10 +44,11 @@ function CustomerMenu (props) {
                 <li className="listMenu"><a>Meat</a></li>
                 <li className="listMenu"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li>
                 <li className="listMenu" ><a>See all products</a></li>
-                <Greeting isLoggedIn={props.session} />
+                <Greeting isLoggedIn={this.props.session} />
              </ul>
         </div>
     );
 }
+}
 
-export default CustomerMenu;
+export default MenuBar;
