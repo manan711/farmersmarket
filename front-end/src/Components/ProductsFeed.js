@@ -10,10 +10,13 @@ const ProductsFeed = () =>   {
     // const { categoryType } = location.state
     // const { categoryType } = location.state //|| {categoryType: "All"};
 
-    const { categoryType } = useContext(AppContext);
+    const { categoryType, setCart } = useContext(AppContext);
     const [productList, setProductList] = useState([]);
 
+
+
     useEffect(()=>{
+
         console.log(categoryType)
         const requestBody = categoryType === "All" ? 
                 {
@@ -46,8 +49,8 @@ const ProductsFeed = () =>   {
     return (
         <Container>
             <ul className='productList'>
-                {productList.map(product => (<ProductCard className="productItem" key={product.ProductID} productName= {product.ProductName} 
-                productImage={product.ProductImageURL} productPrice={product.ProductPrice}/>))}
+                {productList.map(product => (<ProductCard className="productItem" key={product.ProductID} productItem = {product} 
+                />))}
             </ul>
         </Container>
         

@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query = "UPDATE products SET  ProductName = ?, ProductDescription = ?, ProductPrice = ?, ProductQuantity = ? , ProductImageURL = ?, ProductCategory = ?  WHERE ProductID = ?";
     $stmt = $conn->prepare($query);
     
-    $stmt->bind_param("ssiissi", $ProductName, $ProductDescription, $ProductPrice, $ProductQuantity, $ProductImageURL, $ProductCategory,$ProductID);
+    $stmt->bind_param("ssfissi", $ProductName, $ProductDescription, $ProductPrice, $ProductQuantity, $ProductImageURL, $ProductCategory,$ProductID);
     
     $product = new stdClass();
 

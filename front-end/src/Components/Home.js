@@ -11,47 +11,17 @@ import ProductsFeed from "./ProductsFeed";
 import { AppContext} from './AppProvider';
 import MyProduct from "./MyProduct";
 import EditProduct from "./EditProduct";
+import MyCart from "./MyCart";
 
 const Home = () => {
 
     const [user_id,setUserId] = useState('');
     const [userName,setUserName] = useState('');
     const [hasSession,setHasSession] = useState(false);
-    const [cart, setCart] = useState(0);
+    const [cart, setCart] = useState({});
+    const [cartPrice, setCartPrice] = useState(0);
     const [categoryType,setCategoryType] = useState("All");
     const [typeAccount,setTypeAccount] = useState("");
-    // const [accountId,setAccountId] = useState("");
-
-    
-
-    // const validateSession = async () => {
-        
-        
-    //     }
-
-    // };
-
-   
-
-    // const getUser = useCallback(() => {
-                
-    //     fetch('http://localhost/backend/getUserById.php', {
-    //         method: 'GET',
-    //         headers: {
-    //         'Content-Type': 'application/json'
-    //         },body: JSON.stringify({
-    //             user_id: user_id
-    //         }) 
-    //     }).then( (response) => {
-    //         return response.json()
-    //     })
-    //     .then( (data) => {
-    //         console.log(data)
-    //         setUserName(data.firstName);
-    //         setHasSession(true);  
-    //         setHasSession(true);
-    //     }).catch(() => setMessage('Usuario invalidooo'));
-    // },[user_id]);
 
     useEffect(() => {
         if(sessionStorage.getItem("id")){
@@ -62,11 +32,25 @@ const Home = () => {
              setHasSession(true);
             // getUser();
         }
+
+        const newCart = JSON.parse(sessionStorage.getItem("myCart"));
+        console.log(newCart);
+        if(!(newCart === null)){
+            console.log("reconheceu");
+            setCart(newCart);
+        }
+        const totalPrice = sessionStorage.getItem("totalPrice");
+        if(!(totalPrice === null)){
+            setCartPrice(totalPrice);
+        }else{
+            sessionStorage.setItem("totalPrice", cartPrice);
+        }
+
     }, []);
 
     return (
         <>
-           <AppContext.Provider value={{user_id,cart,setCart,userName, categoryType, typeAccount, hasSession,setCategoryType }}>
+           <AppContext.Provider value={{user_id,cart,setCart,userName, categoryType, typeAccount, hasSession,setCategoryType , cartPrice, setCartPrice}}>
              <BrowserRouter>
                  {/* <Header name = {userName} session = {hasSession}/> */}
                  <Header/> 
@@ -81,6 +65,7 @@ const Home = () => {
                  <Route path="/productFeed" element={<ProductsFeed />} /> 
                  <Route path="/myProducts" element={<MyProduct />} /> 
                  <Route path="/editProduct" element={<EditProduct />} /> 
+                 <Route path="/myCart" element={<MyCart />} /> 
                  </Routes>
              </BrowserRouter>
              </AppContext.Provider>

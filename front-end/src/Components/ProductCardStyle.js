@@ -44,4 +44,32 @@ padding-top: 5%;
     font-weight: bold;
 }
 
+#btnAdd{
+    background: #58F4D8;
+    border-radius: 4px;
+    border: none;
+    font-size: medium;
+    width: 40%;
+    height: 40px;
+    color: black;
+    font-weight: bold;
+}
+
+#btnRemove{
+    background: rgb(234 110 110);
+    border-radius: 4px;
+    border: none;
+    font-size: medium;
+    width: 40%;
+    height: 40px;
+    color: black;
+    font-weight: bold;
+}
+
+#groupButtonCart{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 `;

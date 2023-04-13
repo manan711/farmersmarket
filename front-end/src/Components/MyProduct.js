@@ -49,7 +49,6 @@ const MyProduct = () =>   {
     } 
 
     const handleEdit  =  (product, key) =>{
-        console.log("entrou");
         navigate('/editProduct',{state:{product}});
         // <Navigate to="/editProduct" state={product}/>;
     } 

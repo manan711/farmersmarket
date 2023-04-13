@@ -5,15 +5,19 @@ import iconProfile from "../Images/Icon-profile.svg";
 import iconCart  from "../Images/Icon-cart.svg";
 import { Container } from "./HeaderStyle";
 import { AppContext } from './AppProvider';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Header = () => {
    
+   const navigate = useNavigate();
+
+
    function handleLogin(){
       window.location.replace("login");
    }
-   const { cart, userName, hasSession } = useContext(AppContext);
+   const { cartPrice, userName, hasSession } = useContext(AppContext);
   
   const UseName = () => {
    return <>
@@ -40,8 +44,8 @@ const UseButtonLogin = () => {
              </div>
              <div id="informationCart">
                 <img src={iconCart} id="Icon-Cart" alt="Icon-Cart"/>
-                <p id="cartPrice">$ {cart}</p>
-                <button id="btnCheckout">Checkout</button>
+                <p id="cartPrice">$ {cartPrice}</p>
+                <button id="btnCheckout" onClick={()=> navigate('/myCart')}>My Cart</button>
              </div>
         </Container>
 
