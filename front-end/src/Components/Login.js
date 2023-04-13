@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logoMarket from "../Images/Logo_MarketPlace.png"
-import '../Styles/login.css';
+import { Container } from "./LoginStyle";
+// import '../Styles/login.css';
 
 class Login extends Component {
     constructor(props) {
@@ -39,11 +40,13 @@ class Login extends Component {
             if(data.status){
                 sessionStorage.setItem("id", data.UserId);
                 sessionStorage.setItem("name", data.FirstName);
-                if(data.TypeAccount === "Customer"){
-                    sessionStorage.setItem("CustomerId", data.accountID);
-                }else if(data.TypeAccount === "Farmer"){
-                    sessionStorage.setItem("FarmerId", data.accountID);
-                }
+                sessionStorage.setItem("typeOfAccount", data.TypeAccount);
+                sessionStorage.setItem("accountID", data.accountID);
+                // if(data.TypeAccount === "Customer"){
+                //     sessionStorage.setItem("CustomerId", data.accountID);
+                // }else if(data.TypeAccount === "Farmer"){
+                //     sessionStorage.setItem("FarmerId", data.accountID);
+                // }
                
                that.setState({...that.state, message: data.message})
                window.location.replace("/");
@@ -57,7 +60,7 @@ class Login extends Component {
 
 render() {
     return (
-        <div className='loginPage'>
+        <Container>
             <img src={logoMarket} className="farmLogin" alt="logo" />
             <form className="formLogin" onSubmit={this.handleSubmit}>
                 <label htmlFor="email">Email </label> 
@@ -72,7 +75,7 @@ render() {
             <Link className='linkTo' to="/createAccount">Create Account</Link>
             {/* <Link className='linkTo' to="/www/createAccount">Create Account</Link> */}
 
-        </div>
+        </Container>
     );
     }
 }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import logoMarket from "../Images/Logo_MarketPlace.png"
-import '../Styles/createAccount.css';
+import logoMarket from "../Images/Logo_MarketPlace.png";
+import { Container } from "./CreateAccountStyle";
+// import '../Styles/createAccount.css';
 
 class CreateAccount extends Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class CreateAccount extends Component {
 
 render() {
     return (
-        <div className='createAccountPage'>
+        <Container>
         <img src={logoMarket} className="farmLogin" alt="logo" />
         <h1>Create an account</h1>
         <form  className="createAccountForm" onSubmit={this.handleSubmit}>
@@ -103,7 +104,7 @@ render() {
             <p>{this.state.message}</p>
         </form>
         <Link className='linkTo' to="/login">Go back to Login</Link>
-        </div>
+        </Container>
     );
     }
 }

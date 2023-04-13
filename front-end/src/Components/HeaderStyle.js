@@ -93,5 +93,13 @@ export const Container = styled.div`
     font-size: medium;
     font-weight: bold;
 }
+.btnItem{
+    background: #14d7b3;
+    color: black;
+    margin-top: 2%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+}
 
 `;

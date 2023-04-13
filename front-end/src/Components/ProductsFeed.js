@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import { useLocation } from 'react-router-dom';
+import React, {useState, useEffect, useContext } from 'react';
 import ProductCard from './ProductCard';
 import { Container } from './ProductFeedStyle';
+import { AppContext } from './AppProvider'
 // import '../Styles/productFeed.css';
 
 const ProductsFeed = () =>   {
 
-    const location = useLocation();
-    const { categoryType } = location.state
+    // const location = useLocation();
+    // const { categoryType } = location.state
+    // const { categoryType } = location.state //|| {categoryType: "All"};
 
-
+    const { categoryType } = useContext(AppContext);
     const [productList, setProductList] = useState([]);
 
     useEffect(()=>{
+        console.log(categoryType)
         const requestBody = categoryType === "All" ? 
                 {
                     method: 'GET',
@@ -37,35 +39,7 @@ const ProductsFeed = () =>   {
                 setProductList(data);
             });
         
-        // if(categoryType === "All"){
-        //     fetch('http://localhost/backend/listOfProduct.php', {
-        //         method: 'GET',
-        //         headers: {
-        //         'Content-Type': 'application/json'
-        //         }
-        //     })
-        //     .then( (response) => {
-        //         return response.json()
-        //     }).then( (data) => {
-        //         setProductList(data);
-        //     });
-        // }else{
-        //     fetch('http://localhost/backend/listOfProduct.php', {
-        //         method: 'POST',
-        //         headers: {
-        //         'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             ProductCategory: categoryType
-        //         }) 
-        //     })
-        //     .then( (response) => {
-        //         return response.json()
-        //     }).then( (data) => {
-        //         setProductList(data);
-        //     });
-        // }
-       
+        
         
     },[categoryType]);
 

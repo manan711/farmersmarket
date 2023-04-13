@@ -6,7 +6,7 @@ import { AppContext } from './AppProvider'
 
 
 function CustomerListOfProduts (props) {
-    const { cart,setCart, username } = useContext(AppContext);
+    const { cart,setCart } = useContext(AppContext);
     
 
     return(

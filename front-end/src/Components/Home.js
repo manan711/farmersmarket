@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback}from "react";
+import React, {useEffect, useState}from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './Header';
 import MenuBar from './MenuBar';
@@ -8,7 +8,9 @@ import MyAccount from './MyAccount'
 import Login from './Login';
 import AddProduct from "./AddProduct";
 import ProductsFeed from "./ProductsFeed";
-import { AppContext} from './AppProvider'
+import { AppContext} from './AppProvider';
+import MyProduct from "./MyProduct";
+import EditProduct from "./EditProduct";
 
 const Home = () => {
 
@@ -16,7 +18,9 @@ const Home = () => {
     const [userName,setUserName] = useState('');
     const [hasSession,setHasSession] = useState(false);
     const [cart, setCart] = useState(0);
-    const [,setMessage] = useState('');
+    const [categoryType,setCategoryType] = useState("All");
+    const [typeAccount,setTypeAccount] = useState("");
+    // const [accountId,setAccountId] = useState("");
 
     
 
@@ -29,56 +33,57 @@ const Home = () => {
 
    
 
-    const getUser = useCallback(() => {
+    // const getUser = useCallback(() => {
                 
-        fetch('http://localhost/backend/getUserById.php', {
-            method: 'GET',
-            headers: {
-            'Content-Type': 'application/json'
-            },body: JSON.stringify({
-                user_id: user_id
-            }) 
-        }).then( (response) => {
-            return response.json()
-        })
-        .then( (data) => {
-            console.log(data)
-            setUserName(data.firstName);
-            setHasSession(true);  
-        }).catch(() => setMessage('Usuario invalidooo'));
-    },[user_id]);
+    //     fetch('http://localhost/backend/getUserById.php', {
+    //         method: 'GET',
+    //         headers: {
+    //         'Content-Type': 'application/json'
+    //         },body: JSON.stringify({
+    //             user_id: user_id
+    //         }) 
+    //     }).then( (response) => {
+    //         return response.json()
+    //     })
+    //     .then( (data) => {
+    //         console.log(data)
+    //         setUserName(data.firstName);
+    //         setHasSession(true);  
+    //         setHasSession(true);
+    //     }).catch(() => setMessage('Usuario invalidooo'));
+    // },[user_id]);
 
     useEffect(() => {
         if(sessionStorage.getItem("id")){
              setUserId(sessionStorage.getItem("id"));
              setUserName(sessionStorage.getItem("name"));
+             setTypeAccount(sessionStorage.getItem("typeOfAccount"));
+            //  setAccountId(sessionStorage.getItem("accountID"));
              setHasSession(true);
-            getUser();
+            // getUser();
         }
-    }, [getUser]);
+    }, []);
 
     return (
         <>
-           <AppContext.Provider value={{cart,setCart,userName }}>
+           <AppContext.Provider value={{user_id,cart,setCart,userName, categoryType, typeAccount, hasSession,setCategoryType }}>
              <BrowserRouter>
-                 <Header name = {userName} session = {hasSession}/>
+                 {/* <Header name = {userName} session = {hasSession}/> */}
+                 <Header/> 
                  <MenuBar session = {hasSession}/>
+                 {/* <ProductsFeed /> */}
                  <Routes>
-                 {/* <Route exact path="/" element={<Home/>}/> */}
-                 <Route exact path="/login" element={<Login/>} />
+                 <Route exact path="/" element={<ProductsFeed />}/>
+                 <Route path="/login" element={<Login/>} />
                  <Route path="/createAccount" element={<CreateAccount />} /> 
                  <Route path="/myAccount" element={<MyAccount />} /> 
                  <Route path="/addProduct" element={<AddProduct />} /> 
                  <Route path="/productFeed" element={<ProductsFeed />} /> 
+                 <Route path="/myProducts" element={<MyProduct />} /> 
+                 <Route path="/editProduct" element={<EditProduct />} /> 
                  </Routes>
              </BrowserRouter>
              </AppContext.Provider>
-             {/* <BrowserRouter>
-                 <Routes> */}
-                     {/* <MenuBar session = {this.state.hasSession}/> */}
-                 {/* </Routes>
-             </BrowserRouter> */}
-             {/* <CustomerListOfProduts/> */}
          </>
     )
 }

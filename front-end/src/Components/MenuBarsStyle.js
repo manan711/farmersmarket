@@ -29,7 +29,7 @@ export const Container = styled.div`
     align-items: center;
   }
   
-  .menuItem a {
+  .menuItem a, li {
     display: block;
     color: black;
     text-align: center;

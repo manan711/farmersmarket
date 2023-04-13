@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import '../Styles/addProduct.css';
+import { Container } from "./AddProductStyle";
+// import '../Styles/addProduct.css';
 
 const AddProduct = () =>   {
 
-    const farmerID = sessionStorage.getItem("FarmerId")
+    const farmerID = sessionStorage.getItem("accountID");
     const [productName, setProductName] = useState('');
     const [productDescription, setProductDescription] = useState('');
     const [productPrice, setProductPrice] = useState('');
@@ -55,7 +56,7 @@ const AddProduct = () =>   {
     }; 
 
     return (
-        <div className='addProductPage'>
+        <Container>
         <h1>Register a new product</h1>
         <form  className="formAddProduct" onSubmit={handleSubmit} >
             
@@ -80,7 +81,7 @@ const AddProduct = () =>   {
             <button type="submit">Creat account</button>
             <p>{message}</p>
         </form>
-        </div>
+        </Container>
     );
 }
 

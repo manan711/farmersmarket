@@ -8,17 +8,17 @@ import { AppContext } from './AppProvider';
 
 
 
-const Header = (props) => {
+const Header = () => {
    
    function handleLogin(){
       window.location.replace("login");
    }
-   const { cart } = useContext(AppContext);
+   const { cart, userName, hasSession } = useContext(AppContext);
   
   const UseName = () => {
    return <>
             <img src={iconProfile} id="Icon-Profile" alt="Icon-Profile"/> 
-            <p>Hello, {props.name}</p> 
+            <p>Hello, {userName}</p> 
          </>
    }
     
@@ -35,8 +35,8 @@ const UseButtonLogin = () => {
                 <button id="btnSearch">Search <img src={iconSearch} id="Icon-Search" alt="Icon-Search"/></button>
              </div>
              <div id="informationUser">
-                {props.session && UseName() }
-                {!props.session && UseButtonLogin() }
+                {hasSession && UseName() }
+                {!hasSession && UseButtonLogin() }
              </div>
              <div id="informationCart">
                 <img src={iconCart} id="Icon-Cart" alt="Icon-Cart"/>
