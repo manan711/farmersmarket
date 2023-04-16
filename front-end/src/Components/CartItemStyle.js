@@ -17,7 +17,7 @@ padding-top: 2%;
     -webkit-box-align: center;
     align-items: center;
     height: 80px;
-    background: rgb(143, 23, 23);
+    background: #ddd9d9;;
     -webkit-box-pack: start;
 
 }
@@ -26,6 +26,7 @@ padding-top: 2%;
     width: 86px;
     height: 58px;
     object-fit: revert;
+    border-radius: 13%;
 }
 
 .btnItem{
@@ -40,7 +41,8 @@ padding-top: 2%;
 }
 
 #ItemName{
-    width: 11%;
+    width: 100%;
+    padding-left: 8%;
 }
 #btnAdd{
     background: #58F4D8;
@@ -75,5 +77,11 @@ padding-top: 2%;
 
 #ItemPrice{
     padding-left: 2%;
+}
+
+#blockItemLeft{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 }
 `;

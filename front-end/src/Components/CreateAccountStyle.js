@@ -3,12 +3,14 @@ import styled from "styled-components";
 export const Container = styled.div`
 
 display: flex;
-height: 100vh;
+-webkit-box-align: center;
 align-items: center;
 text-align: center;
 flex-direction: column;
+-webkit-box-pack: center;
+background-color: rgb(243, 241, 241);
 justify-content: center;
-background-color: #F3F1F1;
+padding-top: 5%;
 
 .farmLogin{
     display: block;
@@ -27,8 +29,8 @@ background-color: #F3F1F1;
     box-sizing: border-box;
 }
 .labelCreateAccount{
-    width: 11%;
-    padding: 12px 12px 12px 0;
+    width: 17%;
+    padding: 12px 0px 12px 0px;
     display: inline-flex;
 }
 .linkTo{
@@ -58,7 +60,27 @@ button {
   }
 
   .radioInput{
-    margin-right: 6%;
+    margin-right: 1%;
+  }
+
+  .createAccountForm{
+    display: block;
+  }
+
+  .inputCreateAccount{
+    width: 20%;
+  }
+
+  #radioGroup{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 12px;
+  }
+
+  .labelRadioCreateAccount{
+    padding-left: 130px;
   }
 
 `;

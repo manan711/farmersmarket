@@ -5,7 +5,7 @@ import { AppContext } from './AppProvider'
 
 
 
-function CustomerListOfProduts (props) {
+function ProductCard (props) {
 
     const { cart, setCart , cartPrice, setCartPrice} = useContext(AppContext);
     const [qty, setQty] = useState(0);
@@ -83,4 +83,4 @@ function CustomerListOfProduts (props) {
     );
 }
 
-export default CustomerListOfProduts;
+export default ProductCard;

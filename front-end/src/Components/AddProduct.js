@@ -12,6 +12,12 @@ const AddProduct = () =>   {
     const [productCategory, setProductCategory] = useState('');
     const [productImageURL, setSelectedFile] = useState(null);
     const [message, setMessage] = useState("");
+    const [selectedTypeOfProduct, setSelectedTypeOfProduct] = useState('');
+
+    const options = [
+        { value: 'fruitType', label: 'Fruit' },
+        { value: 'vegetableType', label: 'Vegetables' }
+      ];
 
     const handleClearForm = () => {
         setProductName('');
@@ -21,6 +27,10 @@ const AddProduct = () =>   {
         setProductCategory('');
         setSelectedFile(null);
     }
+
+    const handleChange = (event) => {
+        setSelectedTypeOfProduct(event.target.value);
+      }
 
    const handleSubmit = async event => {
         event.preventDefault();
@@ -73,7 +83,13 @@ const AddProduct = () =>   {
             <input className = "inputAddProduct" type="text" name="productQuantity" placeholder="Product Quantity" value= {productQuantity} onChange={(e) => setProductQuantity(e.target.value)} required/>
             <br/>
             <label className = "labelAddProduct" htmlFor="productCategory">Category </label> 
-            <input className = "inputAddProduct" type="text" name="productCategory" placeholder="Product Category" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required/>
+            <select value={selectedTypeOfProduct} onChange={handleChange}>
+                <option value="">Category</option>
+                {options.map((option) => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+            </select>
+            {/* <input className = "inputAddProduct" type="text" name="productCategory" placeholder="Product Category" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required/> */}
             <br/>
             <label className = "labelAddProduct" htmlFor="productImageURL">Upload the product image: </label> 
             <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])}/>

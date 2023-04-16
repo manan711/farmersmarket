@@ -22,7 +22,7 @@ function CartItem (props) {
 
     const handleRemove  =  (product, key) =>{
 
-        if(qty > 1) {
+        if(cart[product.ProductID].qtyItem > 1) {
             cart[product.ProductID].qtyItem -= 1
             cart[product.ProductID].totalPriceItem =  cart[product.ProductID].totalPriceItem - cart[product.ProductID].ProductPrice;
             setCart(cart);
@@ -42,8 +42,10 @@ function CartItem (props) {
         
         <Container>
             <div className="blockItem">
-                <img src={props.productItem.ProductImageURL} className="ImgItem" alt="ImgItem"/>
-                <p id="ItemName">{props.productItem.ProductName}</p>
+                <div id='blockItemLeft'>
+                    <img src={props.productItem.ProductImageURL} className="ImgItem" alt="ImgItem"/>
+                    <p id="ItemName">{props.productItem.ProductName}</p>
+                </div>
                 {cartPrice > 0 && !!cart[props.productItem.ProductID] &&
                     <div id='groupButtonCart'>
                         <button id="btnRemove" onClick={() => handleRemove(props.productItem, props.key)} >-</button>

@@ -1,33 +1,48 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import logoMarket from "../Images/Logo_MarketPlace.png";
 import { Container } from "./CreateAccountStyle";
 // import '../Styles/createAccount.css';
 
-class CreateAccount extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            firstName: '',
-            lastName:'',
-            email: '',
-            address:'',
-            city:'',
-            password: '',
-            phoneNumber:'',
-            message: '',
-            selectedOption: ''
-        }; 
-        this.onValueChange = this.onValueChange.bind(this);
-    
-    }
-    handleChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
+const CreateAccount = () => {
 
-    handleSubmit = event => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [password, setPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [message, setmMssage] = useState('');
+    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedProvince, setSelectedProvince] = useState('');
+
+
+    const provinces = [
+        'Alberta',
+        'British Columbia',
+        'Manitoba',
+        'New Brunswick',
+        'Newfoundland and Labrador',
+        'Northwest Territories',
+        'New Brunswick',
+        'Nunavut',
+        'Ontario',
+        'Prince Edward Island',
+        'Quebec',
+        'Saskatchewan',
+        'Yukon'
+      ];
+    
+      const handleProvinceChange = event => {
         event.preventDefault();
-        var that = this;
+        setSelectedProvince(event.target.value);
+      }
+    
+
+
+    const handleSubmit = async event => {
+        event.preventDefault();
         
         // fetch('http://localhost:8080/api/users', {
         fetch('http://localhost/backend/createAccount.php', {
@@ -36,162 +51,200 @@ class CreateAccount extends Component {
             'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                FirstName: this.state.firstName,
-                LastName: this.state.lastName,
-                Email: this.state.email,
-                Address: this.state.address,
-                City:this.state.city,
-                Password: this.state.password,
-                PhoneNumber:this.state.phoneNumber,
-                TypeAccount: this.state.selectedOption
+                FirstName: firstName,
+                LastName: lastName,
+                Email: email,
+                Address: address,
+                City: city,
+                Province: selectedProvince,
+                Password: password,
+                PhoneNumber:phoneNumber,
+                TypeAccount: selectedOption
             }) 
         })
         .then( (response) => {
             return response.json()
         }).then( (data) => {
-            that.setState({...that.state, message: "User created"});
+            console.log(data);
+            setmMssage("User created");
+            setmMssage('User not created');
+            // that.setState({...that.state, message: "User created"});
             alert('User created successfully!!');
             window.location.replace("/login");
-        }).catch(() => this.setState({...that.state, message: 'User not created'}));
+        }).catch(() => setmMssage('User not created'));
     }; 
 
-    onValueChange(event) {
-      this.setState({
-        selectedOption: event.target.value
-      });
-    }
+    const handleChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
 
-render() {
     return (
         <Container>
         <img src={logoMarket} className="farmLogin" alt="logo" />
         <h1>Create an account</h1>
-        <form  className="createAccountForm" onSubmit={this.handleSubmit}>
+        <form  className="createAccountForm" onSubmit={handleSubmit}>
             <label className = "labelCreateAccount" htmlFor="firstName">First Name </label> 
-            <input type="text" name="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.handleChange} required/>
+            <input className = "inputCreateAccount" type="text" name="firstName" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required/>
             <br/>
             <label className = "labelCreateAccount" htmlFor="lastName">Last Name </label> 
-            <input type="text" name="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.handleChange} required/>
+            <input className = "inputCreateAccount" type="text" name="lastName" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} required/>
             <br/>
             <label className = "labelCreateAccount" htmlFor="email">Email </label> 
-            <input className = "inputCreateAccount" type="text" name="email" placeholder="email" value={this.state.email} onChange={this.handleChange} required/>
+            <input className = "inputCreateAccount" type="text" name="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
             <br/>
             <label className = "labelCreateAccount" htmlFor="address">Address </label> 
-            <input className = "inputCreateAccount" type="text" name="address" placeholder="Address" value={this.state.address} onChange={this.handleChange} required/>
+            <input className = "inputCreateAccount" type="text" name="address" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} required/>
             <br/>
             <label className = "labelCreateAccount" htmlFor="city">City </label> 
-            <input className = "inputCreateAccount" type="text" name="city" placeholder="City" value={this.state.city} onChange={this.handleChange} required/>
+            <input className = "inputCreateAccount" type="text" name="city" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} required/>
+            <br/>
+            <label className = "labelCreateAccount" htmlFor="productCategory">Province</label> 
+            <select className = "inputCreateAccount" value={selectedProvince} onChange={handleProvinceChange}>
+                <option value=""></option>
+                {provinces.map((province) => (
+                    <option key={province} value={province}>
+                    {province}
+                    </option>
+                ))}
+            </select>
             <br/>
             <label className = "labelCreateAccount" htmlFor="phoneNumber">Phone Number </label> 
-            <input className = "inputCreateAccount" type="text" name="phoneNumber" placeholder="Phone Number" value={this.state.phoneNumber} onChange={this.handleChange} required/>
+            <input className = "inputCreateAccount" type="text" name="phoneNumber" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required/>
             <br/>
             <label className = "labelCreateAccount" htmlFor="password">Password </label> 
-            <input className = "inputCreateAccount" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
+            <input className = "inputCreateAccount" type="password" name="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
             <br/>
             <label className = "labelCreateAccount" htmlFor="confirmPassword">Confirm Password </label> 
-            <input className = "inputCreateAccount" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
+            <input className = "inputCreateAccount" type="password" name="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
             <br/>
-            <div>
-            <label className = "labelCreateAccount" > Select your account type. </label> 
-            <label className="radioTypeOfAccount">
-            <input className="radioInput"  type="radio" value="Customer" checked={this.state.selectedOption === "Customer" } onChange={this.onValueChange} />
+            <div id='radioGroup'>
+            <label className = "labelRadioCreateAccount" > Account type. </label> 
+            <label className="inputCreateAccount">
+            <input className="radioInput"  type="radio" value="Customer" checked={selectedOption === "Customer" } onChange={handleChange} />
              Customer </label>
-            <label className="radioTypeOfAccount">
-            <input className="radioInput" type="radio" value="Farmer" checked={this.state.selectedOption === "Farmer"} onChange={this.onValueChange} />
+            <label className="inputCreateAccount">
+            <input className="radioInput" type="radio" value="Farmer" checked={selectedOption === "Farmer"} onChange={handleChange} name="options"/>
              Farmer </label>
             </div>
             <button type="submit">Creat account</button>
-            <p>{this.state.message}</p>
+            <p>{message}</p>
         </form>
         <Link className='linkTo' to="/login">Go back to Login</Link>
         </Container>
     );
-    }
-}
+ }
 
    export default CreateAccount; 
 
 
-// import React from 'react';
-// import { useState } from 'react';
-// import axios from 'axios';
-// import { useNavigate } from 'react-router';
-// function Register() {
-//   const navigate=useNavigate();
-//   const [data,setData]=useState({
-//     name:"",
-//     email:"",
-//     password:"",
-//     confirmPassword:"",
-//     status:""
-//   })
-//   const handleChange=(e)=>{
-//     setData({...data,[e.target.name]:e.target.value})
-//   }
-//   const submitForm=(e)=>{
-//     e.preventDefault();
-//     if(data.password===data.confirmPassword){
 
+
+//    class CreateAccount extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             firstName: '',
+//             lastName:'',
+//             email: '',
+//             address:'',
+//             city:'',
+//             password: '',
+//             phoneNumber:'',
+//             message: '',
+//             selectedOption: ''
+//         }; 
+//         this.onValueChange = this.onValueChange.bind(this);
     
-//     const sendData={
-//       name:data.name,
-//       email:data.email,
-//       password:data.password,
-//       confirmPassword:data.confirmPassword
 //     }
-//     console.log(sendData)
-//     setData({
-//       name:"",
-//       email:"",
-//       password:"",
-//       confirmPassword:""
-//     })
-    
-//     axios.post('http://localhost/farm_marketplace/src/Backend/register.php',sendData)
-//     .then(res=> {
-//       if(res.data.Status==="Invalid"){
-//         alert("Invalid User");
-//       }else{
-//         navigate('/');
-//       }
-//     })
-//     .catch(error => {
-//       console.log(error.response)
-//   });
+//     handleChange = event => {
+//         this.setState({ [event.target.name]: event.target.value });
+//     };
 
-//   }
-    
-//   }
-//   return (
-//     <div>
-//        <form onSubmit={submitForm}>
-//        <h3>Register</h3>
-//        <div className="mb-3">
-//         <label for="exampleInputName" className="form-label">Name</label>
-//         <input type="text" className="form-control" id="name" name='name' onChange={handleChange} value={data.name}/>
+//     handleSubmit = event => {
+//         event.preventDefault();
+//         var that = this;
+        
+//         // fetch('http://localhost:8080/api/users', {
+//         fetch('http://localhost/backend/createAccount.php', {
+//             method: 'POST',
+//             headers: {
+//             'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 FirstName: this.state.firstName,
+//                 LastName: this.state.lastName,
+//                 Email: this.state.email,
+//                 Address: this.state.address,
+//                 City:this.state.city,
+//                 Password: this.state.password,
+//                 PhoneNumber:this.state.phoneNumber,
+//                 TypeAccount: this.state.selectedOption
+//             }) 
+//         })
+//         .then( (response) => {
+//             return response.json()
+//         }).then( (data) => {
+//             that.setState({...that.state, message: "User created"});
+//             alert('User created successfully!!');
+//             window.location.replace("/login");
+//         }).catch(() => this.setState({...that.state, message: 'User not created'}));
+//     }; 
 
-//       </div>
-//       <div className="mb-3">
-//         <label for="exampleInputEmail1" className="form-label">Email address</label>
-//         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name='email'  onChange={handleChange} value={data.email}/>
-//         <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-//       </div>
-//       <div className="mb-3">
-//         <label for="exampleInputPassword1" className="form-label">Password</label>
-//         <input type="password" className="form-control" id="exampleInputPassword1" name='password'  onChange={handleChange} value={data.password}/>
-//       </div>
-//       <div className="mb-3">
-//         <label for="exampleInputPassword1" className="form-label">Confirm Password</label>
-//         <input type="password" className="form-control" id="exampleInputPassword1" name='confirmPassword'  onChange={handleChange} value={data.confirmPassword}/>
-//       </div>
-//     <div className="mb-3 form-check">
-//       <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-//       <label className="form-check-label" for="exampleCheck1">Check me out</label>
-//     </div>
-//     <button type="submit" className="btn btn-primary">Submit</button>
-// </form>
-// </div>
-//   );
+//     onValueChange(event) {
+//       this.setState({
+//         selectedOption: event.target.value
+//       });
+//     }
+
+// render() {
+//     return (
+//         <Container>
+//         <img src={logoMarket} className="farmLogin" alt="logo" />
+//         <h1>Create an account</h1>
+//         <form  className="createAccountForm" onSubmit={this.handleSubmit}>
+//             <label className = "labelCreateAccount" htmlFor="firstName">First Name </label> 
+//             <input type="text" name="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.handleChange} required/>
+//             <br/>
+//             <label className = "labelCreateAccount" htmlFor="lastName">Last Name </label> 
+//             <input type="text" name="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.handleChange} required/>
+//             <br/>
+//             <label className = "labelCreateAccount" htmlFor="email">Email </label> 
+//             <input className = "inputCreateAccount" type="text" name="email" placeholder="email" value={this.state.email} onChange={this.handleChange} required/>
+//             <br/>
+//             <label className = "labelCreateAccount" htmlFor="address">Address </label> 
+//             <input className = "inputCreateAccount" type="text" name="address" placeholder="Address" value={this.state.address} onChange={this.handleChange} required/>
+//             <br/>
+//             <label className = "labelCreateAccount" htmlFor="city">City </label> 
+//             <input className = "inputCreateAccount" type="text" name="city" placeholder="City" value={this.state.city} onChange={this.handleChange} required/>
+//             <br/>
+//             <label className = "labelCreateAccount" htmlFor="phoneNumber">Phone Number </label> 
+//             <input className = "inputCreateAccount" type="text" name="phoneNumber" placeholder="Phone Number" value={this.state.phoneNumber} onChange={this.handleChange} required/>
+//             <br/>
+//             <label className = "labelCreateAccount" htmlFor="password">Password </label> 
+//             <input className = "inputCreateAccount" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
+//             <br/>
+//             <label className = "labelCreateAccount" htmlFor="confirmPassword">Confirm Password </label> 
+//             <input className = "inputCreateAccount" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
+//             <br/>
+//             <div>
+//             <label className = "labelCreateAccount" > Select your account type. </label> 
+//             <label className="radioTypeOfAccount">
+//             <input className="radioInput"  type="radio" value="Customer" checked={this.state.selectedOption === "Customer" } onChange={this.onValueChange} />
+//              Customer </label>
+//             <label className="radioTypeOfAccount">
+//             <input className="radioInput" type="radio" value="Farmer" checked={this.state.selectedOption === "Farmer"} onChange={this.onValueChange} />
+//              Farmer </label>
+//             </div>
+//             <button type="submit">Creat account</button>
+//             <p>{this.state.message}</p>
+//         </form>
+//         <Link className='linkTo' to="/login">Go back to Login</Link>
+//         </Container>
+//     );
+//     }
 // }
 
-// export default Register;
+//    export default CreateAccount; 
+
+
+

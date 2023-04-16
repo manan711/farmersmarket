@@ -12,7 +12,7 @@ const MenuBar = (props) => {
   useEffect(()=>{
     setCategoryType("All");
 
-  },[]);
+  },[setCategoryType]);
 
   const logOut = () => {
     sessionStorage.clear();
@@ -21,7 +21,6 @@ const MenuBar = (props) => {
 }
 const handleChange = (type) =>{
   setCategoryType(type);
-  console.log(type + "entrei na funcao") ;
 } 
 
 const Greeting = () => {
@@ -29,6 +28,8 @@ const Greeting = () => {
   if (hasSession) {
     return <>
           <li className="menuItem" ><Link to="/myAccount">My Account</Link></li>
+          <li className="menuItem"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li> 
+          <li className="menuItem" ><Link to="/myOrders">My Orders</Link></li>
           <li className="menuItem"><img src={imgLine} id="Img-Line" alt="Img-Line"/></li> 
           {typeAccount === "Farmer" && <>
             <li className="menuItem" ><Link to="/addProduct">Register Product</Link></li>

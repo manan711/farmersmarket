@@ -8,6 +8,7 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Authorization
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $data = json_decode(file_get_contents("php://input"));
+   
         $FirstName = $data->FirstName;
         $LastName = $data->LastName;
         $Email = $data->Email;
@@ -15,8 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $TypeAccount = $data->TypeAccount;
         $Address = $data->Address;
         $City = $data->City;
+        $Province = $data->Province;
         $PhoneNumber = $data->PhoneNumber;
-        
+    
 
         $query = "SELECT Email FROM users WHERE Email = ? ";
         $stmt = $conn->prepare($query);
@@ -38,13 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql->execute();
             $last_id = $sql->insert_id;
             if($TypeAccount == "Customer"){
-                $cmd = "INSERT INTO `customer`(`Address`, `City`, `PhoneNumber`, `UserId`)
-                VALUES ('$data->Address','$data->City','$data->PhoneNumber','$last_id')";
+                $cmd = "INSERT INTO `customer`(`Address`, `City`,`Province`, `PhoneNumber`, `UserId`)
+                VALUES ('$data->Address','$data->City','$data->Province','$data->PhoneNumber','$last_id')";
                 $sql = $conn->prepare($cmd);
                 $sql->execute();
             }else if($TypeAccount == "Farmer"){
-                $cmd = "INSERT INTO `farmer`(`Address`, `City`, `PhoneNumber`, `UserId`)
-                VALUES ('$data->Address','$data->City','$data->PhoneNumber','$last_id')";
+                $cmd = "INSERT INTO `farmer`(`Address`, `City`,`Province`, `PhoneNumber`, `UserId`)
+                VALUES ('$Address','$City','$Province','$PhoneNumber','$last_id')";
                 $sql = $conn->prepare($cmd);
                 $sql->execute();
             }
@@ -55,27 +57,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }     
 
 }
-// require 'connection.php';
-// header("Access-Control-Allow-Origin: http://localhost:3000");
-// header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-// header("Access-Control-Allow-Headers: Content-Type, Authorization");
- 
-// $postdata = file_get_contents("php://input");
-// if(isset($postdata) && !empty($postdata)){
-//     $request = json_decode($postdata);
-     
-     
-//     $name = $request->name;
-//     $email = $request->email;
-//     $password = $request->password;
-//     $hash = password_hash($password, PASSWORD_DEFAULT);
-//     $sql = "INSERT INTO users (name,email,password) VALUES ('$name','$email','$hash')";
-//     if(mysqli_query($db,$sql)){
-//         http_response_code(201);
-//     }
-//     else{
-//          http_response_code(422); 
-//     }
-         
-// }
-?> 
+
+

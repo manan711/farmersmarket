@@ -12,6 +12,8 @@ import { AppContext} from './AppProvider';
 import MyProduct from "./MyProduct";
 import EditProduct from "./EditProduct";
 import MyCart from "./MyCart";
+import Receipt from "./Receipt";
+import MyOrders from "./MyOrders";
 
 const Home = () => {
 
@@ -36,7 +38,6 @@ const Home = () => {
         const newCart = JSON.parse(sessionStorage.getItem("myCart"));
         console.log(newCart);
         if(!(newCart === null)){
-            console.log("reconheceu");
             setCart(newCart);
         }
         const totalPrice = sessionStorage.getItem("totalPrice");
@@ -46,7 +47,7 @@ const Home = () => {
             sessionStorage.setItem("totalPrice", cartPrice);
         }
 
-    }, []);
+    }, [setCart,setCartPrice ,cartPrice]);
 
     return (
         <>
@@ -66,6 +67,8 @@ const Home = () => {
                  <Route path="/myProducts" element={<MyProduct />} /> 
                  <Route path="/editProduct" element={<EditProduct />} /> 
                  <Route path="/myCart" element={<MyCart />} /> 
+                 <Route path="/receipt" element={<Receipt />} /> 
+                 <Route path="/myOrders" element={<MyOrders />} /> 
                  </Routes>
              </BrowserRouter>
              </AppContext.Provider>

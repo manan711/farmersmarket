@@ -10,14 +10,13 @@ const ProductsFeed = () =>   {
     // const { categoryType } = location.state
     // const { categoryType } = location.state //|| {categoryType: "All"};
 
-    const { categoryType, setCart } = useContext(AppContext);
+    const { categoryType } = useContext(AppContext);
     const [productList, setProductList] = useState([]);
 
 
 
     useEffect(()=>{
 
-        console.log(categoryType)
         const requestBody = categoryType === "All" ? 
                 {
                     method: 'GET',

@@ -42,12 +42,6 @@ class Login extends Component {
                 sessionStorage.setItem("name", data.FirstName);
                 sessionStorage.setItem("typeOfAccount", data.TypeAccount);
                 sessionStorage.setItem("accountID", data.accountID);
-                // if(data.TypeAccount === "Customer"){
-                //     sessionStorage.setItem("CustomerId", data.accountID);
-                // }else if(data.TypeAccount === "Farmer"){
-                //     sessionStorage.setItem("FarmerId", data.accountID);
-                // }
-               
                that.setState({...that.state, message: data.message})
                window.location.replace("/");
             }else{

@@ -8,6 +8,7 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Authorization
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $data = json_decode(file_get_contents("php://input"));
   $UserId = $data->UserId;
+
   $query = "SELECT * FROM users WHERE UserId = ?";
   $stmt = $conn->prepare($query);
   $stmt->bind_param("i", $UserId);
@@ -35,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user->CustomerID = $row['CustomerID'];
         $user->Address = $row['Address'];
         $user->City = $row['City'];
+        $user->Province = $row['Province'];
         $user->PhoneNumber = $row['PhoneNumber'];
       }else if($user->TypeAccount == "Farmer"){
         $query = "SELECT * FROM farmer WHERE UserId = ?";
@@ -46,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user->FarmerID = $row['FarmerID'];
         $user->Address = $row['Address'];
         $user->City = $row['City'];
+        $user->Province = $row['Province'];
         $user->PhoneNumber = $row['PhoneNumber'];
       }
       $myJSON = json_encode($user);
