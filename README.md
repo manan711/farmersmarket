@@ -32,9 +32,37 @@ Farm Marketplace is a project developed for the Web Technologies class of the Mo
 
 ## Features
 
-- Create user types `farmer` and `customer`.
+- Farmer and Customer:
 
-<img src="./files_readme/user_create.gif" title="Dijkstra" width="500" height="250">
-- Login
+  - Create user types `farmer` and `customer`:
+
+    <img src="./files_readme/user_create.gif" title="Create User" width="500" height="250">
+    
+    
+   - Update account:
+   
+    <img src="./files_readme/updateAccount.gif" title="Create User" width="500" height="250">    
+    
+   - Login:
+   
+      <img src="./files_readme/login.gif" title="Dijkstra" width="500" height="250">
+    
+   - Carry out order:
+   
+     <img src="./files_readme/shop.gif" title="Dijkstra" width="500" height="250">
+     
+  - Check orders:
+  
+    <img src="./files_readme/myOrders.gif" title="Dijkstra" width="500" height="250">
+   
+- Farmer:
+
+  - Register product:
+  
+    <img src="./files_readme/registerProduct.gif" title="Dijkstra" width="500" height="250">
+
+  - Upadate and Delete product:
+  
+    <img src="./files_readme/updateAndDeleteProduct.gif" title="Dijkstra" width="500" height="250">
 
 ## Future work
