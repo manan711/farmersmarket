@@ -41,7 +41,7 @@ Farm Marketplace is a project developed for the Web Technologies class of the Mo
     
    - Update account:
    
-    <img src="./files_readme/updateAccount.gif" title="Create User" width="500" height="250">    
+      <img src="./files_readme/updateAccount.gif" title="Create User" width="500" height="250">    
     
    - Login:
    
