@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 20/04/2023 às 04:20
--- Versão do servidor: 10.4.21-MariaDB
--- Versão do PHP: 8.0.19
+-- Tempo de geração: 21/04/2023 às 07:32
+-- Versão do servidor: 10.4.24-MariaDB
+-- Versão do PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -16,6 +16,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `farm_marketplace`
+--
 
 -- --------------------------------------------------------
 
@@ -32,7 +36,6 @@ CREATE TABLE `customer` (
   `PhoneNumber` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
 -- --------------------------------------------------------
 
 --
@@ -48,6 +51,12 @@ CREATE TABLE `farmer` (
   `PhoneNumber` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Despejando dados para a tabela `farmer`
+--
+
+INSERT INTO `farmer` (`FarmerID`, `UserId`, `Address`, `City`, `Province`, `PhoneNumber`) VALUES
+(4, 12, '108 University Ave', 'Waterloo', 'ON', '(519) 885-0300');
 
 -- --------------------------------------------------------
 
@@ -63,7 +72,9 @@ CREATE TABLE `orderItem` (
   `ItemPrice` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
 
+--
 -- Estrutura para tabela `orders`
 --
 
@@ -87,12 +98,21 @@ CREATE TABLE `products` (
   `FarmerID` int(11) NOT NULL,
   `ProductName` varchar(255) NOT NULL,
   `ProductDescription` varchar(255) NOT NULL,
-  `ProductPrice` int(11) NOT NULL,
+  `ProductPrice` decimal(10,2) DEFAULT NULL,
   `ProductQuantity` int(100) NOT NULL,
   `ProductImageURL` varchar(255) NOT NULL,
   `ProductCategory` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Despejando dados para a tabela `products`
+--
+
+INSERT INTO `products` (`ProductID`, `FarmerID`, `ProductName`, `ProductDescription`, `ProductPrice`, `ProductQuantity`, `ProductImageURL`, `ProductCategory`) VALUES
+(74, 4, 'Tomato ', 'Beefsteak Red', '1.47', 12, 'tomato.jpeg', 'Fruit'),
+(75, 4, 'Potato', 'yellow potato', '1.80', 34, 'potato.jpeg', 'Vegetables'),
+(76, 4, 'Carrot', 'carrot', '1.99', 111, 'Carrot.jpeg', 'Vegetables'),
+(77, 4, 'Lettuce', 'Lettuce Iceberg', '2.99', 12, 'Lettuce.jpeg', 'Vegetables');
 
 -- --------------------------------------------------------
 
@@ -109,6 +129,12 @@ CREATE TABLE `users` (
   `TypeAccount` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Despejando dados para a tabela `users`
+--
+
+INSERT INTO `users` (`UserId`, `FirstName`, `LastName`, `Email`, `Password`, `TypeAccount`) VALUES
+(12, 'Admin', 'Admin', 'admin@email.com', '123', 'Farmer');
 
 --
 -- Índices para tabelas despejadas
@@ -170,7 +196,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT de tabela `farmer`
 --
 ALTER TABLE `farmer`
-  MODIFY `FarmerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `FarmerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `orderItem`
@@ -188,13 +214,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT de tabela `products`
 --
 ALTER TABLE `products`
-  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restrições para tabelas despejadas

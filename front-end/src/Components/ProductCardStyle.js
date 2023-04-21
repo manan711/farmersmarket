@@ -30,7 +30,8 @@ padding-top: 5%;
     }
 }
 .ImgItem{
-    width: inherit;
+    width: 80px;
+    height: 100%;
 }
 
 .btnItem{

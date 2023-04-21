@@ -38,6 +38,7 @@ const ProductsFeed = () =>   {
             .then( (response) => {
                 return response.json()
             }).then( (data) => {
+                console.log(data);
                 setProductList(data);
             });
         

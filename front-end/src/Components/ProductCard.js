@@ -13,7 +13,7 @@ function ProductCard (props) {
     const handleAdd  =  (product, key) =>{
 
         if(!cart[product.ProductID]){
-            setQty(qty+1);
+            //setQty(qty+1);
             const newCart = {
                 ...cart,
                 [product.ProductID]: {
@@ -29,24 +29,24 @@ function ProductCard (props) {
         }else{
             const newCart = JSON.parse(sessionStorage.getItem("myCart"));
             
-            setQty(qty+1);
+            //setQty(qty+1);
             newCart[product.ProductID].qtyItem += 1
-            newCart[product.ProductID].totalPriceItem = newCart[product.ProductID].totalPriceItem + newCart[product.ProductID].ProductPrice;
+            newCart[product.ProductID].totalPriceItem = Number(newCart[product.ProductID].totalPriceItem) + Number(newCart[product.ProductID].ProductPrice);
             setCart(newCart);
             sessionStorage.setItem("myCart", JSON.stringify(newCart));
         }
         let totalPrice = sessionStorage.getItem("totalPrice");
-        totalPrice = parseFloat(totalPrice) + product.ProductPrice;
+        totalPrice = Number(totalPrice)+ Number(product.ProductPrice);
         console.log(totalPrice);
         setCartPrice(totalPrice);
-        sessionStorage.setItem("totalPrice", totalPrice);
+        sessionStorage.setItem("totalPrice", parseFloat(totalPrice).toFixed(2));
     }
 
     const handleRemove  =  (product, key) =>{
          const newCart = JSON.parse(sessionStorage.getItem("myCart"));
-        if(qty > 1) {
+        if(newCart[product.ProductID].qtyItem > 1) {
             newCart[product.ProductID].qtyItem -= 1;
-            newCart[product.ProductID].totalPriceItem =  newCart[product.ProductID].totalPriceItem - newCart[product.ProductID].ProductPrice;
+            newCart[product.ProductID].totalPriceItem =  Number(newCart[product.ProductID].totalPriceItem) - Number(newCart[product.ProductID].ProductPrice);
             setCart(newCart);
             sessionStorage.setItem("myCart", JSON.stringify(newCart));
         }else{
@@ -54,11 +54,11 @@ function ProductCard (props) {
             setCart(newCart);
             sessionStorage.setItem("myCart", JSON.stringify(newCart));
         }
-        setQty(qty-1);
+        //setQty(qty-1);
         let totalPrice = sessionStorage.getItem("totalPrice");
-        totalPrice = parseFloat(totalPrice) - product.ProductPrice
+        totalPrice = Number(totalPrice) - Number(product.ProductPrice);
         setCartPrice(totalPrice);
-        sessionStorage.setItem("totalPrice", totalPrice);
+        sessionStorage.setItem("totalPrice", parseFloat(totalPrice).toFixed(2));
     }
 
     return(
