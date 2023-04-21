@@ -1,3 +1,4 @@
+<img src="./files_readme/Logo_MarketPlace.png" title="Logo Farm Marketplace">
 # Farm Marketplace
 
 Farm Marketplace is a project developed for the Web Technologies class of the Mobile Stulion Development course at Conestoga College.
@@ -26,5 +27,7 @@ Farm Marketplace is a project developed for the Web Technologies class of the Mo
 - Open http://localhost:5000/www to view it in your browser.
 
 ## Features
+
+- 
 
 ## Future work
