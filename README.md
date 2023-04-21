@@ -1,12 +1,34 @@
-# Getting Started with Create React App
+# Farm Marketplace
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Farm Marketplace is a project developed for the Web Technologies class of the Mobile Stulion Development course at Conestoga College.
 
-## Available Scripts
+## Purpose
 
-In the project directory, you can run:
 
-### `npm start`
+## Deployment
+
+### Running In Terminal
+
+`Cloning the git repository.`
+
+-Clone code - "git clone url_repository" .
+
+`Installing node_modules package.`
+-Running "npm install" in front-end path .
+
+`Creating the image in docker.`
+
+-Running "docker build -t webproject ." in farm_marketplace path .
+-Running "docker run --name webproject-image -p 5000:80 -d webproject" in farm_marketplace path .
+
+### Accessing the website
+
+-Open http://localhost:5000/www to view it in your browser.
+
+
+## Features
+
+## Future work
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -61,7 +83,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/m
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
