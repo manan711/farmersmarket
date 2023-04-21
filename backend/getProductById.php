@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $product->ProductPrice = $row['ProductPrice'];
         $product->ProductQuantity = $row['ProductQuantity'];
         $product->ProductImageURL = $row['ProductImageURL']; 
-        $product->ProductFullImageURL = 'http://localhost/backend/uploads/'. $row["ProductImageURL"];
+        $product->ProductFullImageURL = 'http://localhost:5000/www/uploads/'. $row["ProductImageURL"];
         $product->ProductCategory = $row['ProductCategory'];
 
         $myJSON = json_encode($product);

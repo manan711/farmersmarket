@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
    $productList = array();
     while($row = mysqli_fetch_array($result)){
-      $row["ProductImageURL"] = 'http://localhost/backend/uploads/'. $row["ProductImageURL"];
+      $row["ProductImageURL"] = 'http://localhost:5000/www/uploads/'. $row["ProductImageURL"];
       array_push($productList,$row);
     }
   
