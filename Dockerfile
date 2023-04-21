@@ -12,7 +12,7 @@ COPY ./db /db
 
 # Run a command that first executes the init.sh script in the /db directory and then keeps the container running indefinitely
 
-# CMD ["/bin/sh", "-c", "/db/init.sh && while true; do sleep 1; done"]
+CMD ["/bin/sh", "-c", "/db/init.sh && while true; do sleep 1; done"]
 
 RUN mkdir -p /www/uploads
 RUN chmod 777 /www/uploads
