@@ -97,3 +97,7 @@ The marketplace is focused on promoting the development of local Farmers, allowi
 - **Land Purchase:** The land purchase feature is a unique addition to the Farm Market website, allowing consumers to purchase a piece of land in the farmer's backyard and use it to grow their favorite fruits and vegetables. The land purchase feature has been implemented using a secure payment gateway to ensure all transactions are safe and secure. This feature benefits both consumers and farmers as it allows consumers to take a more hands-on approach to growing their own produce and provides farmers with an additional revenue stream.
 
 - **Farmer Forum:** A forum is a fantastic resource that will connect different Farmers with the aim of sharing tips, problems, area news and other things, thus strengthening the Farmer community. By clicking on the site, the Farmer can send messages and access past posts made by other Farmers.
+
+## Database schema
+
+<img src="./files_readme/database_schema.jpeg" title="Database schema" width="500" height="250">
