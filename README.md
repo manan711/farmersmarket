@@ -29,6 +29,9 @@ Farm Marketplace is a project developed for the Web Technologies class of the Mo
 ### Accessing the website:
 
 - Open http://localhost:5000/www to view it in your browser.
+- User default:
+  - email: admin@email.com
+  - password: 123
 
 ## Features
 
