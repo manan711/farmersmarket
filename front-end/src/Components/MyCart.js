@@ -7,7 +7,7 @@ import { AppContext } from './AppProvider'
 
 const MyCart = () =>   {
 
-const { cart, setCart , cartPrice, setCartPrice} = useContext(AppContext);
+const { url, cart, setCart , cartPrice, setCartPrice} = useContext(AppContext);
 
 const focusPayment = useRef(null);
 const navigate = useNavigate();
@@ -36,27 +36,20 @@ const months = [
   ];
 
   const taxRatesCanada = {
-    "Alberta": 0.05,
-    "British Columbia": 0.07,
-    "Manitoba": 0.07,
-    "New Brunswick": 0.10,
-    "Newfoundland and Labrador": 0.15,
-    "Northwest Territories": 0.05,
-    "Nova Scotia": 0.15,
-    "Nunavut": 0.05,
-    "Ontario": 0.13,
-    "Prince Edward Island": 0.15,
-    "Quebec": 0.09975,
-    "Saskatchewan": 0.06,
-    "Yukon": 0.05
+    "AB": 0.05,
+    "BC": 0.07,
+    "MB": 0.07,
+    "NB": 0.10,
+    "NL": 0.15,
+    "NT": 0.05,
+    "NS": 0.15,
+    "NU": 0.05,
+    "ON": 0.13,
+    "PE": 0.15,
+    "QC": 0.09975,
+    "SK": 0.06,
+    "YT": 0.05
   };
-
-useEffect(() => {
-    if (focusPayment.current) {
-      focusPayment.current.focus();
-      getUser();
-    }
-  }, [checkout]);
 
 const handleYearChange = event => {
     event.preventDefault();
@@ -66,7 +59,8 @@ const handleYearChange = event => {
 const getUser = async() =>{
     const id = sessionStorage.getItem("id");
     setUserId(id);
-    await fetch('http://localhost/backend/getUserById.php', {
+    await fetch(url + 'getUserById.php', {
+    // await fetch('http://localhost/backend/getUserById.php', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
@@ -83,6 +77,14 @@ const getUser = async() =>{
         }).catch(() => alert('error fetch'));
         
 }
+
+useEffect(() => {
+    if (focusPayment.current) {
+      focusPayment.current.focus();
+      getUser();
+    }
+  }, [checkout]);
+
 const calculateTotalPrice = () => {
     const tax = taxRatesCanada[userProvince];
     const totalTax = cartPrice * tax;
@@ -103,8 +105,8 @@ const goToCheckout = () =>{
     event.preventDefault();
     const {totalTax,newTotalPrice} = calculateTotalPrice();
 
-
-    fetch('http://localhost/backend/createOrder.php', {
+    fetch(url + 'createOrder.php', {
+    // fetch('http://localhost/backend/createOrder.php', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'

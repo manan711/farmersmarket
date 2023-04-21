@@ -6,7 +6,7 @@ import { AppContext } from './AppProvider'
 
 
 function CartItem (props) {
-    const { cart, setCart , cartPrice, setCartPrice} = useContext(AppContext);
+    const {cart, setCart , cartPrice, setCartPrice} = useContext(AppContext);
     const [qty, setQty] = useState(0);
 
     const handleAdd  =  (product, key) =>{

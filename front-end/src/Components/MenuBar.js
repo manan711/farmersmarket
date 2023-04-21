@@ -5,9 +5,9 @@ import imgLine from '../Images/Line.svg';
 import { Container } from "./MenuBarsStyle";
 import { AppContext } from './AppProvider';
 
-const MenuBar = (props) => {
-  const { setCategoryType,hasSession, typeAccount } = useContext(AppContext);
+const MenuBar = () => {
 
+  const { setCategoryType,hasSession, typeAccount , path} = useContext(AppContext);
 
   useEffect(()=>{
     setCategoryType("All");
@@ -17,7 +17,7 @@ const MenuBar = (props) => {
   const logOut = () => {
     sessionStorage.clear();
     alert('session ended');
-    window.location.replace("/");
+    window.location.replace(path);
 }
 const handleChange = (type) =>{
   setCategoryType(type);

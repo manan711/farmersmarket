@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Container } from './MyProductStyle';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from './AppProvider';
 
 const MyProduct = () =>   {
+
+    const { url} = useContext(AppContext);
 
     const accountID  = sessionStorage.getItem("accountID");
 
@@ -13,9 +16,10 @@ const MyProduct = () =>   {
 
     useEffect(()=>{
         if(!sessionStorage.getItem("id")){
-            window.location.replace("/");
+            navigate('/');
         }
-        fetch('http://localhost/backend/getListOfProductByFarmer.php', {
+        fetch(url + 'getListOfProductByFarmer.php', {
+        // fetch('http://localhost/backend/getListOfProductByFarmer.php', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
@@ -30,10 +34,11 @@ const MyProduct = () =>   {
             setProductList(data);
         });
         
-    },[accountID]);
+    },[accountID, url, navigate]);
 
     const handleDelete  = async (product, key) =>{
-        await fetch('http://localhost/backend/deleteProduct.php', {
+        await fetch(url + 'deleteProduct.php', {
+        // await fetch('http://localhost/backend/deleteProduct.php', {
             method: 'DELETE',
             headers: {
             'Content-Type': 'application/json'

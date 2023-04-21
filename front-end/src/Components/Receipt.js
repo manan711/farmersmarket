@@ -1,12 +1,15 @@
-import React, {useState, useEffect,useCallback} from 'react';
+import React, {useState, useEffect,useCallback, useContext} from 'react';
 import { Container } from './ReceiptStyle';
-import { useLocation} from 'react-router-dom';
-
+import { useLocation, useNavigate} from 'react-router-dom';
+import { AppContext } from './AppProvider';
 
 const Receipt = () =>   {
 
+    const { url} = useContext(AppContext);
+
     const location = useLocation();
     const orderId = location.state?.orderId;
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const [subTotal, setSubTotal] = useState(0);
@@ -17,7 +20,8 @@ const Receipt = () =>   {
 
     const getUser = useCallback(async () => {
         const id = sessionStorage.getItem("id");
-        await fetch('http://localhost/backend/getUserById.php', {
+        await fetch(url + 'getUserById.php',{
+        // await fetch('http://localhost/backend/getUserById.php', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'
@@ -32,11 +36,12 @@ const Receipt = () =>   {
                 setName(data.FirstName + ' ' + data.LastName);               
             }).catch(() => alert('error fetch'));
             
-        }, []);
+        }, [url]);
 
     const getOrder = useCallback(async() =>{
 
-        await fetch('http://localhost/backend/getOrderById.php', {
+        await fetch(url + 'getOrderById.php',{
+        // await fetch('http://localhost/backend/getOrderById.php', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'
@@ -55,16 +60,16 @@ const Receipt = () =>   {
                 setTotalPrice(data.TotalPrice);
             }).catch(() => alert('error fetch'));
             
-        }, [orderId]);
+        }, [orderId, url]);
 
     useEffect(()=>{
         if(!sessionStorage.getItem("id")){
-            window.location.replace("/");
+            navigate('/');
         }
         getUser();
         getOrder();
         
-    },[getOrder,getUser]);
+    },[getOrder,getUser,navigate]);
 
     return (
         <Container>

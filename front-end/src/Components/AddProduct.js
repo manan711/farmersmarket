@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { Container } from "./AddProductStyle";
+import { AppContext } from './AppProvider'
 // import '../Styles/addProduct.css';
 
 const AddProduct = () =>   {
+
+    const { url} = useContext(AppContext);
 
     const farmerID = sessionStorage.getItem("accountID");
     const [productName, setProductName] = useState('');
@@ -12,7 +15,6 @@ const AddProduct = () =>   {
     const [productCategory, setProductCategory] = useState('');
     const [productImageURL, setSelectedFile] = useState(null);
     const [message, setMessage] = useState("");
-    const [selectedTypeOfProduct, setSelectedTypeOfProduct] = useState('');
 
     const options = [
         { value: 'fruitType', label: 'Fruit' },
@@ -29,7 +31,7 @@ const AddProduct = () =>   {
     }
 
     const handleChange = (event) => {
-        setSelectedTypeOfProduct(event.target.value);
+        setProductCategory(event.target.value);
       }
 
    const handleSubmit = async event => {
@@ -44,9 +46,10 @@ const AddProduct = () =>   {
         formData.append("productCategory", productCategory);
         formData.append("productImageURL", productImageURL);
         
-        // fetch('http://localhost:8080/api/users', {
+        // fetch('http://localhost:5000/www/addProduct.php', {
         try{
-            await fetch('http://localhost/backend/addProduct.php', {
+            await fetch(url + 'addProduct.php', {
+            // await fetch('http://localhost:5000/www/addProduct.php', {
                 method: 'POST',
                 body: formData
             })
@@ -83,10 +86,10 @@ const AddProduct = () =>   {
             <input className = "inputAddProduct" type="text" name="productQuantity" placeholder="Product Quantity" value= {productQuantity} onChange={(e) => setProductQuantity(e.target.value)} required/>
             <br/>
             <label className = "labelAddProduct" htmlFor="productCategory">Category </label> 
-            <select value={selectedTypeOfProduct} onChange={handleChange}>
+            <select value={productCategory} onChange={handleChange}>
                 <option value="">Category</option>
                 {options.map((option) => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
+                    <option key={option.value} value={option.label}>{option.label}</option>
                 ))}
             </select>
             {/* <input className = "inputAddProduct" type="text" name="productCategory" placeholder="Product Category" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required/> */}
@@ -94,7 +97,7 @@ const AddProduct = () =>   {
             <label className = "labelAddProduct" htmlFor="productImageURL">Upload the product image: </label> 
             <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])}/>
 
-            <button type="submit">Creat account</button>
+            <button type="submit">Register product</button>
             <p>{message}</p>
         </form>
         </Container>

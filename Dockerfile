@@ -8,7 +8,8 @@ COPY ./backend /www
 RUN mkdir /db
 
 # Copy the database files to the /db directory within the container
-#COPY ./db /db
+COPY ./db /db
 
 # Run a command that first executes the init.sh script in the /db directory and then keeps the container running indefinitely
+
 # CMD ["/bin/sh", "-c", "/db/init.sh && while true; do sleep 1; done"]

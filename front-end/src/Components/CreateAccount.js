@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState, useContext} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logoMarket from "../Images/Logo_MarketPlace.png";
 import { Container } from "./CreateAccountStyle";
+import { AppContext } from './AppProvider';
 // import '../Styles/createAccount.css';
 
 const CreateAccount = () => {
+
+    const navigate = useNavigate();
+    const { url} = useContext(AppContext);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -14,24 +18,24 @@ const CreateAccount = () => {
     const [password, setPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [message, setmMssage] = useState('');
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState('Customer');
     const [selectedProvince, setSelectedProvince] = useState('');
 
 
     const provinces = [
-        'Alberta',
-        'British Columbia',
-        'Manitoba',
-        'New Brunswick',
-        'Newfoundland and Labrador',
-        'Northwest Territories',
-        'New Brunswick',
-        'Nunavut',
-        'Ontario',
-        'Prince Edward Island',
-        'Quebec',
-        'Saskatchewan',
-        'Yukon'
+        { value: 'AB', label: 'Alberta' },
+        { value: 'BC', label: 'British Columbia' },
+        { value: 'MB', label: 'Manitoba' },
+        { value: 'NB', label: 'New Brunswick' },
+        { value: 'NL', label: 'Newfoundland and Labrador' },
+        { value: 'NT', label: 'Northwest Territories' },
+        { value: 'NS', label: 'Nova Scotia' },
+        { value: 'NU', label: 'Nunavut' },
+        { value: 'ON', label: 'Ontario' },
+        { value: 'PE', label: 'Prince Edward Island' },
+        { value: 'QC', label: 'Quebec' },
+        { value: 'SK', label: 'Saskatchewan' },
+        { value: 'YT', label: 'Yukon' }
       ];
     
       const handleProvinceChange = event => {
@@ -44,8 +48,8 @@ const CreateAccount = () => {
     const handleSubmit = async event => {
         event.preventDefault();
         
-        // fetch('http://localhost:8080/api/users', {
-        fetch('http://localhost/backend/createAccount.php', {
+        // fetch('http://localhost:5000/www/createAccount.php', {
+        fetch(url + 'createAccount.php', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
@@ -70,7 +74,7 @@ const CreateAccount = () => {
             setmMssage('User not created');
             // that.setState({...that.state, message: "User created"});
             alert('User created successfully!!');
-            window.location.replace("/login");
+            navigate('/login');
         }).catch(() => setmMssage('User not created'));
     }; 
 
@@ -99,11 +103,11 @@ const CreateAccount = () => {
             <input className = "inputCreateAccount" type="text" name="city" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} required/>
             <br/>
             <label className = "labelCreateAccount" htmlFor="productCategory">Province</label> 
-            <select className = "inputCreateAccount" value={selectedProvince} onChange={handleProvinceChange}>
+            <select className = "inputCreateAccount" value={selectedProvince} onChange={handleProvinceChange}required>
                 <option value=""></option>
                 {provinces.map((province) => (
-                    <option key={province} value={province}>
-                    {province}
+                    <option key={province.value} value={province.value}>
+                    {province.label}
                     </option>
                 ))}
             </select>
@@ -135,116 +139,5 @@ const CreateAccount = () => {
  }
 
    export default CreateAccount; 
-
-
-
-
-//    class CreateAccount extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             firstName: '',
-//             lastName:'',
-//             email: '',
-//             address:'',
-//             city:'',
-//             password: '',
-//             phoneNumber:'',
-//             message: '',
-//             selectedOption: ''
-//         }; 
-//         this.onValueChange = this.onValueChange.bind(this);
-    
-//     }
-//     handleChange = event => {
-//         this.setState({ [event.target.name]: event.target.value });
-//     };
-
-//     handleSubmit = event => {
-//         event.preventDefault();
-//         var that = this;
-        
-//         // fetch('http://localhost:8080/api/users', {
-//         fetch('http://localhost/backend/createAccount.php', {
-//             method: 'POST',
-//             headers: {
-//             'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 FirstName: this.state.firstName,
-//                 LastName: this.state.lastName,
-//                 Email: this.state.email,
-//                 Address: this.state.address,
-//                 City:this.state.city,
-//                 Password: this.state.password,
-//                 PhoneNumber:this.state.phoneNumber,
-//                 TypeAccount: this.state.selectedOption
-//             }) 
-//         })
-//         .then( (response) => {
-//             return response.json()
-//         }).then( (data) => {
-//             that.setState({...that.state, message: "User created"});
-//             alert('User created successfully!!');
-//             window.location.replace("/login");
-//         }).catch(() => this.setState({...that.state, message: 'User not created'}));
-//     }; 
-
-//     onValueChange(event) {
-//       this.setState({
-//         selectedOption: event.target.value
-//       });
-//     }
-
-// render() {
-//     return (
-//         <Container>
-//         <img src={logoMarket} className="farmLogin" alt="logo" />
-//         <h1>Create an account</h1>
-//         <form  className="createAccountForm" onSubmit={this.handleSubmit}>
-//             <label className = "labelCreateAccount" htmlFor="firstName">First Name </label> 
-//             <input type="text" name="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.handleChange} required/>
-//             <br/>
-//             <label className = "labelCreateAccount" htmlFor="lastName">Last Name </label> 
-//             <input type="text" name="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.handleChange} required/>
-//             <br/>
-//             <label className = "labelCreateAccount" htmlFor="email">Email </label> 
-//             <input className = "inputCreateAccount" type="text" name="email" placeholder="email" value={this.state.email} onChange={this.handleChange} required/>
-//             <br/>
-//             <label className = "labelCreateAccount" htmlFor="address">Address </label> 
-//             <input className = "inputCreateAccount" type="text" name="address" placeholder="Address" value={this.state.address} onChange={this.handleChange} required/>
-//             <br/>
-//             <label className = "labelCreateAccount" htmlFor="city">City </label> 
-//             <input className = "inputCreateAccount" type="text" name="city" placeholder="City" value={this.state.city} onChange={this.handleChange} required/>
-//             <br/>
-//             <label className = "labelCreateAccount" htmlFor="phoneNumber">Phone Number </label> 
-//             <input className = "inputCreateAccount" type="text" name="phoneNumber" placeholder="Phone Number" value={this.state.phoneNumber} onChange={this.handleChange} required/>
-//             <br/>
-//             <label className = "labelCreateAccount" htmlFor="password">Password </label> 
-//             <input className = "inputCreateAccount" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
-//             <br/>
-//             <label className = "labelCreateAccount" htmlFor="confirmPassword">Confirm Password </label> 
-//             <input className = "inputCreateAccount" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
-//             <br/>
-//             <div>
-//             <label className = "labelCreateAccount" > Select your account type. </label> 
-//             <label className="radioTypeOfAccount">
-//             <input className="radioInput"  type="radio" value="Customer" checked={this.state.selectedOption === "Customer" } onChange={this.onValueChange} />
-//              Customer </label>
-//             <label className="radioTypeOfAccount">
-//             <input className="radioInput" type="radio" value="Farmer" checked={this.state.selectedOption === "Farmer"} onChange={this.onValueChange} />
-//              Farmer </label>
-//             </div>
-//             <button type="submit">Creat account</button>
-//             <p>{this.state.message}</p>
-//         </form>
-//         <Link className='linkTo' to="/login">Go back to Login</Link>
-//         </Container>
-//     );
-//     }
-// }
-
-//    export default CreateAccount; 
-
 
 

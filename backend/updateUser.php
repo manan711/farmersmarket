@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $TypeAccount = $data->TypeAccount;
     $Address = $data->Address;
     $City = $data->City;
+    $Province = $data->Province;
     $PhoneNumber = $data->PhoneNumber;
 
     $query = "UPDATE users SET FirstName = ?, LastName = ?, Email = ?, Password = ?, TypeAccount = ?  WHERE UserId = ?";
@@ -25,11 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $user = new stdClass();
     if($stmt->execute()){
+
+      
       if($TypeAccount == "Customer"){
-        $query = "UPDATE customer SET Address = ?, City = ?, PhoneNumber = ? WHERE UserId = ?";
+        $query = "UPDATE customer SET Address = ?, City = ?, Province = ? , PhoneNumber = ? WHERE UserId = ?";
         
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sssi", $Address, $City, $PhoneNumber, $UserId);
+        $stmt->bind_param("ssssi", $Address, $City, $Province, $PhoneNumber, $UserId);
         
         if($stmt->execute()){
             $user->status = true;
@@ -43,10 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo $myJSON;
         }
         
-      }else if($uTypeAccount == "Farmer"){
-        $query = "UPDATE farmer SET Address = ?, City = ?, PhoneNumber = ? WHERE UserId = ?";
+      }else if($TypeAccount == "Farmer"){
+       
+        $query = "UPDATE farmer SET Address = ?, City = ?, Province = ? , PhoneNumber = ? WHERE UserId = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sssi", $Address, $City, $PhoneNumber, $UserId);
+        $stmt->bind_param("ssssi", $Address, $City, $Province, $PhoneNumber, $UserId);
         if($stmt->execute()){
             $user->status = true;
             $user->message = "User updated.";

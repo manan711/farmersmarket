@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 16/04/2023 às 08:36
+-- Tempo de geração: 20/04/2023 às 04:20
 -- Versão do servidor: 10.4.21-MariaDB
 -- Versão do PHP: 8.0.19
 
@@ -16,10 +16,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
---
--- Banco de dados: `farm_marketplace`
---
 
 -- --------------------------------------------------------
 
@@ -67,7 +63,7 @@ CREATE TABLE `orderItem` (
   `ItemPrice` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
+
 -- Estrutura para tabela `orders`
 --
 
@@ -97,6 +93,9 @@ CREATE TABLE `products` (
   `ProductCategory` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+-- --------------------------------------------------------
+
 --
 -- Estrutura para tabela `users`
 --
@@ -109,6 +108,7 @@ CREATE TABLE `users` (
   `Password` varchar(200) NOT NULL,
   `TypeAccount` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 --
 -- Índices para tabelas despejadas

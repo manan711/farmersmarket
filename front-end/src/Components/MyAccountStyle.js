@@ -34,4 +34,12 @@ h1 {
     box-sizing: border-box;
 }
 
+button {
+    background: #14d7b3;
+    color: black;
+    margin-top: 2%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+  }
 `;

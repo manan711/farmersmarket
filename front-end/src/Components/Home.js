@@ -17,6 +17,11 @@ import MyOrders from "./MyOrders";
 
 const Home = () => {
 
+    // const url = 'http://localhost/backend/';
+    // const path = 'http://localhost:3000';
+    const path = 'http://localhost:5000/www/';
+    const url = 'http://localhost:5000/www/';
+
     const [user_id,setUserId] = useState('');
     const [userName,setUserName] = useState('');
     const [hasSession,setHasSession] = useState(false);
@@ -36,7 +41,6 @@ const Home = () => {
         }
 
         const newCart = JSON.parse(sessionStorage.getItem("myCart"));
-        console.log(newCart);
         if(!(newCart === null)){
             setCart(newCart);
         }
@@ -51,14 +55,15 @@ const Home = () => {
 
     return (
         <>
-           <AppContext.Provider value={{user_id,cart,setCart,userName, categoryType, typeAccount, hasSession,setCategoryType , cartPrice, setCartPrice}}>
+           <AppContext.Provider value={{url,path, user_id,cart,setCart,userName, categoryType, typeAccount, hasSession,setCategoryType , cartPrice, setCartPrice}}>
              <BrowserRouter>
                  {/* <Header name = {userName} session = {hasSession}/> */}
                  <Header/> 
                  <MenuBar session = {hasSession}/>
                  {/* <ProductsFeed /> */}
                  <Routes>
-                 <Route exact path="/" element={<ProductsFeed />}/>
+                 {/* <Route exact path="/" element={<Home />}/> */}
+                 <Route exact path="/www" element={<ProductsFeed />}/>
                  <Route path="/login" element={<Login/>} />
                  <Route path="/createAccount" element={<CreateAccount />} /> 
                  <Route path="/myAccount" element={<MyAccount />} /> 
@@ -78,82 +83,4 @@ const Home = () => {
 
 
 export default Home;
-
-// class Home extends Component  {
-
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             user_id: '',
-//             userName: '',
-//             hasSession: false
-//         }; 
-//     }
-//     componentDidMount() {
-//         this.validateSession();
-//     }
-//     async validateSession () {
-//         var that = this;
-//         if(sessionStorage.getItem("id")){
-//             await that.setState({user_id: sessionStorage.getItem("id"),userName: sessionStorage.getItem("name") ,hasSession: true});
-            
-//             this.getUser();
-//         }
-
-//     };
-
-//     getUser () {
-//         var that = this;
-//         fetch('http://localhost/backend/getUserById.php', {
-//             method: 'GET',
-//             headers: {
-//             'Content-Type': 'application/json'
-//             },body: JSON.stringify({
-//                 user_id: that.state.user_id
-//             }) 
-//         }).then( (response) => {
-//             return response.json()
-//         })
-//         .then( (data) => {
-//             console.log(data)
-//             that.setState({
-//                 userName: data.firstName,
-//                 hasSession: true
-//             })
-            
-           
-//         }).catch(() => this.setState({...that.state, message: 'Usuario invalidooo'}));
-//     }
-
-    
-
-//     render() {
-        
-//     return(
-//         <>
-//             <AppContext.Provider>
-//             <BrowserRouter>
-//                 <Header name = {this.state.userName} session = {this.state.hasSession}/>
-//                 <MenuBar session = {this.state.hasSession}/>
-//                 <Routes>
-//                 {/* <Route exact path="/" element={<Home/>}/> */}
-//                 <Route exact path="/login" element={<Login/>} />
-//                 <Route path="/createAccount" element={<CreateAccount />} /> 
-//                 <Route path="/myAccount" element={<MyAccount />} /> 
-//                 <Route path="/addProduct" element={<AddProduct />} /> 
-//                 <Route path="/productFeed" element={<ProductsFeed />} /> 
-//                 </Routes>
-//             </BrowserRouter>
-//             </AppContext.Provider>
-//             {/* <BrowserRouter>
-//                 <Routes> */}
-//                     {/* <MenuBar session = {this.state.hasSession}/> */}
-//                 {/* </Routes>
-//             </BrowserRouter> */}
-//             {/* <CustomerListOfProduts/> */}
-//         </>
-        
-//     );
-//     }
-// }
 

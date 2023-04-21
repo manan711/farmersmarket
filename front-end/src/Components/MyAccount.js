@@ -1,139 +1,157 @@
-import React, { Component } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import {useNavigate } from 'react-router-dom';
 import {Container} from './MyAccountStyle';
+import { AppContext } from './AppProvider';
 // import '../Styles/createAccount.css';
 
-class MyAccount extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: sessionStorage.getItem("id"),
-            firstName: '',
-            lastName:'',
-            email: '',
-            address:'',
-            city:'',
-            password: '',
-            phoneNumber:'',
-            message: '',
-            selectedOption: ''
-        }; 
-        this.onValueChange = this.onValueChange.bind(this);
-    }
+const MyAccount = () => {
 
-    componentDidMount() {
-        this.getUser();
-    }
-    getUser(){
-        var that = this;
-        // fetch('http://localhost:8080/api/users', {
-        fetch('http://localhost/backend/getUserById.php', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                UserId: this.state.id
-            }) 
-        })
-        .then( (response) => {
-            return response.json()
-        }).then( (data) => {
-            
-            that.setState({
-                firstName: data.FirstName,
-                lastName: data.LastName,
-                email: data.Email,
-                address: data.Address,
-                city: data.City,
-                password: data.Password,
-                phoneNumber: data.PhoneNumber,
-                selectedOption: data.TypeAccount,
+    const { url, user_id} = useContext(AppContext);
+    const navigate = useNavigate();
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [password, setPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [message, setmMssage] = useState('');
+    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedProvince, setSelectedProvince] = useState('');
+
+      const provinces = [
+        { value: 'AB', label: 'Alberta' },
+        { value: 'BC', label: 'British Columbia' },
+        { value: 'MB', label: 'Manitoba' },
+        { value: 'NB', label: 'New Brunswick' },
+        { value: 'NL', label: 'Newfoundland and Labrador' },
+        { value: 'NT', label: 'Northwest Territories' },
+        { value: 'NS', label: 'Nova Scotia' },
+        { value: 'NU', label: 'Nunavut' },
+        { value: 'ON', label: 'Ontario' },
+        { value: 'PE', label: 'Prince Edward Island' },
+        { value: 'QC', label: 'Quebec' },
+        { value: 'SK', label: 'Saskatchewan' },
+        { value: 'YT', label: 'Yukon' }
+      ];
+
+    useEffect(()=>{
+        if(!sessionStorage.getItem("id")){
+            navigate('/');
+        }
+        fetch(url + 'getUserById.php', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    UserId: user_id
+                }) 
             })
-        }).catch(() => this.setState({...that.state, message: 'User not created'}));
-    }
+            .then( (response) => {
+                return response.json()
+            }).then( (data) => {
+                setFirstName(data.FirstName);
+                setLastName(data.LastName);
+                setEmail(data.Email);
+                setAddress(data.Address);
+                setCity(data.City);
+                setPassword(data.Password);
+                setPhoneNumber(data.PhoneNumber);
+                setSelectedOption(data.TypeAccount);
+                setSelectedProvince(data.Province);
 
-    handleChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
-
-    handleSubmit = event => {
-        event.preventDefault();
-        var that = this;
+            }).catch(() => setmMssage('User not created'));
         
-        // fetch('http://localhost:8080/api/users', {
-        fetch('http://localhost/backend/updateUser.php', {
+        
+    },[url, user_id, navigate]);
+
+    const handleProvinceChange = event => {
+        event.preventDefault();
+        setSelectedProvince(event.target.value);
+      }
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        
+        fetch(url + 'updateUser.php', {
+    
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                UserId: this.state.id,
-                FirstName: this.state.firstName,
-                LastName: this.state.lastName,
-                Email: this.state.email,
-                Address: this.state.address,
-                City:this.state.city,
-                Password: this.state.password,
-                PhoneNumber:this.state.phoneNumber,
-                TypeAccount: this.state.selectedOption
+                UserId: user_id,
+                FirstName: firstName,
+                LastName: lastName,
+                Email: email,
+                Address: address,
+                City:city,
+                Password: password,
+                Province: selectedProvince,
+                PhoneNumber: phoneNumber,
+                TypeAccount: selectedOption
             }) 
         })
         .then( (response) => {
             return response.json()
         }).then( (data) => {
+            console.log(data);
             if(data.status){
-                that.setState({...that.state, message: data.message});
+                setmMssage(data.message);
+                alert('User updated successfully!!');
             }else{
-                that.setState({...that.state, message: data.message});
+                setmMssage(data.message);
             }
             
         });
     }; 
 
-    onValueChange(event) {
-      this.setState({
-        selectedOption: event.target.value
-      });
-    }
-
-render() {
     return (
         <Container>
         <h1>My account</h1>
-        <form  className="myAccountForm" onSubmit={this.handleSubmit}>
+        <form  className="myAccountForm" onSubmit={handleSubmit}>
             <label className = "labelMyAccount" htmlFor="firstName">First Name </label> 
-            <input className = "inputMyAccount" type="text" name="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.handleChange} required/>
+            <input className = "inputMyAccount" type="text" name="firstName" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required/>
             <br/>
             <label className = "labelMyAccount" htmlFor="lastName">Last Name </label> 
-            <input className = "inputMyAccount" type="text" name="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.handleChange} required/>
+            <input className = "inputMyAccount" type="text" name="lastName" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}required/>
             <br/>
             <label className = "labelMyAccount" htmlFor="email">Email </label> 
-            <input className = "inputMyAccount" type="text" name="email" placeholder="email" value={this.state.email} onChange={this.handleChange} required/>
+            <input className = "inputMyAccount" type="text" name="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
             <br/>
             <label className = "labelMyAccount" htmlFor="address">Address </label> 
-            <input className = "inputMyAccount" type="text" name="address" placeholder="Address" value={this.state.address} onChange={this.handleChange} required/>
+            <input className = "inputMyAccount" type="text" name="address" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)}required/>
             <br/>
             <label className = "labelMyAccount" htmlFor="city">City </label> 
-            <input className = "inputMyAccount" type="text" name="city" placeholder="City" value={this.state.city} onChange={this.handleChange} required/>
+            <input className = "inputMyAccount" type="text" name="city" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} required/>
+            <br/>
+            <label className = "labelMyAccount" htmlFor="city">Province </label> 
+            <select className = "inputMyAccount" value={selectedProvince} onChange={handleProvinceChange}>
+                    <option value={provinces[selectedProvince]}></option>
+                    {provinces.map((province) => (
+                        <option key={province.value} value={province.value}>{province.label}</option>
+                    ))}
+            </select>
             <br/>
             <label className = "labelMyAccount" htmlFor="phoneNumber">Phone Number </label> 
-            <input className = "inputMyAccount" type="text" name="phoneNumber" placeholder="Phone Number" value={this.state.phoneNumber} onChange={this.handleChange} required/>
+            <input className = "inputMyAccount" type="text" name="phoneNumber" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}required/>
             <br/>
             <label className = "labelMyAccount" htmlFor="password">Password </label> 
-            <input className = "inputMyAccount" type="text" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
-            <br/>
-            <label className = "labelMyAccount" htmlFor="confirmPassword">Confirm Password </label> 
-            <input className = "inputMyAccount" type="text" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
+            <input className = "inputMyAccount" type="text" name="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
             <br/>
             <label className = "labelMyAccount" htmlFor="accountType">Your account type </label> 
-            <input className = "inputMyAccount" type="text" name="accountType" placeholder="account" value={this.state.selectedOption} disabled/>
+            <input className = "inputMyAccount" type="text" name="accountType" placeholder="account" value={selectedOption} disabled/>
             <br/>
             <button type="submit">Update Account</button>
-            <p>{this.state.message}</p>
+            <p>{message}</p>
         </form>
         </Container>
     );
-    }
+
 }
 
    export default MyAccount; 
+
+

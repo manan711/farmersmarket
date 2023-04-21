@@ -13,8 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ProductDescription = $_POST["ProductDescription"];
     $ProductPrice = $_POST["ProductPrice"];
     $ProductQuantity = $_POST["ProductQuantity"];
-    $ProductImageURL = $_FILES["ProductImageURL"]["name"];
     $ProductCategory = $_POST["ProductCategory"];
+    if (isset($_FILES["ProductImageURL"]["name"])) {
+        $ProductImageURL = $_FILES["ProductImageURL"]["name"];
+    } else if (isset($_POST["ProductImageURL"])) {
+        $ProductImageURL = $_POST["ProductImageURL"];
+    }
 
     $query = "UPDATE products SET  ProductName = ?, ProductDescription = ?, ProductPrice = ?, ProductQuantity = ? , ProductImageURL = ?, ProductCategory = ?  WHERE ProductID = ?";
     $stmt = $conn->prepare($query);
@@ -25,15 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if($stmt->execute()){
 
-        $file = file_get_contents($_FILES["ProductImageURL"]["tmp_name"]);
-        $root_folder = __DIR__.'/uploads/';
-       
-        if (!is_dir($root_folder)) {
-            echo mkdir($root_folder, 0777, true);
+        if (isset($_FILES["ProductImageURL"]["name"])) {
+            $file = file_get_contents($_FILES["ProductImageURL"]["tmp_name"]);
+            $root_folder = __DIR__.'/uploads/';
+            file_put_contents($root_folder.$ProductImageURL, $file);
         }
-        
-        file_put_contents($root_folder. $ProductImageURL, $file);
-
 
         $product->status = true;
         $product->message = "Product updated.";

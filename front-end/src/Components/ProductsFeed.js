@@ -10,7 +10,7 @@ const ProductsFeed = () =>   {
     // const { categoryType } = location.state
     // const { categoryType } = location.state //|| {categoryType: "All"};
 
-    const { categoryType } = useContext(AppContext);
+    const { categoryType, url } = useContext(AppContext);
     const [productList, setProductList] = useState([]);
 
 
@@ -33,8 +33,8 @@ const ProductsFeed = () =>   {
                         ProductCategory: categoryType
                     }) 
                 }
-
-        fetch('http://localhost/backend/listOfProduct.php', requestBody)
+        fetch(url + 'listOfProduct.php', requestBody)
+        // fetch('http://localhost/backend/listOfProduct.php', requestBody)
             .then( (response) => {
                 return response.json()
             }).then( (data) => {
@@ -43,7 +43,7 @@ const ProductsFeed = () =>   {
         
         
         
-    },[categoryType]);
+    },[categoryType, url]);
 
     return (
         <Container>

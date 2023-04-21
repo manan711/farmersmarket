@@ -1,8 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Container } from './MyOrdersStyle';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from './AppProvider';
 
 const MyOrders = () =>   {
+
+    const { url} = useContext(AppContext);
+
     let cont = 0;
 
     const UserId  = sessionStorage.getItem("id");
@@ -14,9 +18,10 @@ const MyOrders = () =>   {
 
     useEffect(()=>{
         if(!sessionStorage.getItem("id")){
-            window.location.replace("/");
+            navigate('/');
         }
-        fetch('http://localhost/backend/getListOfOrdersById.php', {
+        fetch(url + 'getListOfOrdersById.php', {
+        // fetch('http://localhost/backend/getListOfOrdersById.php', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
@@ -31,7 +36,7 @@ const MyOrders = () =>   {
             setOrderList(data);
         });
         
-    },[UserId]);
+    },[UserId, url, navigate]);
 
 
     const handleDetail  =  (order) =>{

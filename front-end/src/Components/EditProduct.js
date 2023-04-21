@@ -1,11 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Container } from "./EditProductStyle";
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
+import { AppContext } from './AppProvider';
 
 // import '../Styles/addProduct.css';
 
 const EditProduct = () =>   {
 
+    const { url} = useContext(AppContext);
+
+    const navigate = useNavigate();
     const location = useLocation();
     const product = location.state?.product;
 
@@ -19,13 +23,24 @@ const EditProduct = () =>   {
     const [productFullImageURL, setProductFullImageURL] = useState(null);
     const [message, setMessage] = useState("");
 
+    const options = [
+        { value: 'Fruit', label: 'Fruit' },
+        { value: 'Vegetables', label: 'Vegetables' }
+      ];
+
+      const handleChange = (event) => {
+        setProductCategory(event.target.value);
+      }
+
 
     useEffect(()=>{
-        if(!sessionStorage.getItem("id") || sessionStorage.getItem("typeOfAccount") != "Farmer"){
-            window.location.replace("/");
+        if(!sessionStorage.getItem("id") || sessionStorage.getItem("typeOfAccount") !== "Farmer"){
+            navigate('/');
         }
 
-        fetch('http://localhost/backend/getProductById.php', {
+        
+        fetch(url + 'getProductById.php', {
+        // fetch('http://localhost/backend/getProductById.php', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
@@ -42,10 +57,11 @@ const EditProduct = () =>   {
             setProductPrice(data.ProductPrice);
             setProductQuantity(data.ProductQuantity);
             setProductCategory(data.ProductCategory);
+            setSelectedFile(data.ProductImageURL);
             setProductFullImageURL(data.ProductFullImageURL);
         });
         
-    },[productID]);
+    },[url, productID]);
 
     const handleClearForm = () => {
         setProductName('');
@@ -57,6 +73,9 @@ const EditProduct = () =>   {
     }
 
    const handleSubmit = async event => {
+
+        //console.log(productImageURL);
+
         event.preventDefault();
         const formData = new FormData();
         formData.append("ProductID", productID);
@@ -67,28 +86,23 @@ const EditProduct = () =>   {
         formData.append("ProductCategory", productCategory);
         formData.append("ProductImageURL", productImageURL);
 
-        console.log(formData);
-        
-        // fetch('http://localhost:8080/api/users', {
         try{
-            await fetch('http://localhost/backend/updateProduct.php', {
+            const response = await fetch(url + 'updateProduct.php', {
+            // await fetch('http://localhost/backend/updateProduct.php', {
                 method: 'POST',
                 body: formData
-            }).then( (response) => {
-                return response.json()
-            }).then( (data) => {
-                if(data.status){
-                    setMessage(data.message);
-                    alert(data.message);
-                }else{
-                    setMessage(data.message);
-                }
-                
             });
             
-
+            const data = await response.json();
+            console.log(data);
+            if(data.status){
+                setMessage(data.message);
+                alert(data.message);
+            }else{
+                setMessage(data.message);
+            }
         }catch(e){
-            console.error(e);
+           console.error(e);
             alert('Error when register the product !!');
         }
     
@@ -97,7 +111,7 @@ const EditProduct = () =>   {
 
     return (
         <Container>
-        <h1>Register a new product</h1>
+        <h1>Edit product</h1>
         <form  className="formAddProduct" onSubmit={handleSubmit} >
             <div id='outProductCard'>
                 <div id='leftProductCard'>
@@ -114,7 +128,13 @@ const EditProduct = () =>   {
                 <input className = "inputAddProduct" type="text" name="productQuantity" placeholder="Product Quantity" value= {productQuantity} onChange={(e) => setProductQuantity(e.target.value)} required/>
                 <br/>
                 <label className = "labelAddProduct" htmlFor="productCategory">Category </label> 
-                <input className = "inputAddProduct" type="text" name="productCategory" placeholder="Product Category" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required/>
+                <select value={productCategory} onChange={handleChange}>
+                    <option value={options[productCategory]}></option>
+                    {options.map((option) => (
+                        <option key={option.value} value={option.label}>{option.label}</option>
+                    ))}
+                </select>
+                {/* <input className = "inputAddProduct" type="text" name="productCategory" placeholder="Product Category" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required/> */}
                 <br/>
                 </div>
                 <div id='rightProductCard'>

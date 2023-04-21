@@ -1,36 +1,31 @@
 
-import React, { Component } from 'react';
+import React, {useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import logoMarket from "../Images/Logo_MarketPlace.png"
 import { Container } from "./LoginStyle";
+import { AppContext } from './AppProvider';
 // import '../Styles/login.css';
 
-class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            message: ''
-        }; 
-    
-    }
-    handleChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
-    handleSubmit = event => {
+const Login  = () => {
+    const { url, path} = useContext(AppContext);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setmMssage] = useState('');
+
+
+    const handleSubmit = event => {
         event.preventDefault();
-        var that = this;
         
-        // fetch('http://localhost:5000/www/login.php', {
-        fetch('http://localhost/backend/login.php', {
+        fetch(url + 'login.php', {
+        // fetch('http://localhost/backend/login.php', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                Email: this.state.email,
-                Password: this.state.password
+                Email: email,
+                Password: password
             }) 
         })
         .then(function (response) {
@@ -42,36 +37,35 @@ class Login extends Component {
                 sessionStorage.setItem("name", data.FirstName);
                 sessionStorage.setItem("typeOfAccount", data.TypeAccount);
                 sessionStorage.setItem("accountID", data.accountID);
-               that.setState({...that.state, message: data.message})
-               window.location.replace("/");
+                setmMssage(data.message);
+                window.location.replace(path);
+                // navigate('/');
             }else{
-                that.setState({...that.state, message: 'Invalid user'})
+                setmMssage('Invalid user');
             }
             
         });
     }; 
 
 
-render() {
     return (
         <Container>
             <img src={logoMarket} className="farmLogin" alt="logo" />
-            <form className="formLogin" onSubmit={this.handleSubmit}>
+            <form className="formLogin" onSubmit={handleSubmit}>
                 <label htmlFor="email">Email </label> 
-                <input className = "loginInput" type="text" name="email" placeholder="email" value={this.state.username} onChange={this.handleChange} required/>
+                <input className = "loginInput" type="text" name="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                 <br/>
                 <label htmlFor="password">Password </label> 
-                <input className = "loginInput" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange}required/>
+                <input className = "loginInput" type="password" name="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                 <br/>
                 <button type="submit">Login</button>
-                <p>{this.state.message}</p>
+                <p>{message}</p>
             </form>
             <Link className='linkTo' to="/createAccount">Create Account</Link>
             {/* <Link className='linkTo' to="/www/createAccount">Create Account</Link> */}
 
         </Container>
     );
-    }
 }
 
    export default Login; 
@@ -79,60 +73,74 @@ render() {
 
 
 
-
-// import React from 'react';
-// import { useState } from 'react';
-// import { useNavigate } from 'react-router';
-// import axios from 'axios';
-// function Login() {
-//   const navigate=useNavigate();
-//   const [data,setData]=useState({
-//     email:"",
-//     password:"",
+//    class Login extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             email: '',
+//             password: '',
+//             message: ''
+//         }; 
     
-//   })
-//   const handleChange=(e)=>{
-//     setData({...data,[e.target.name]:e.target.value})
-//   }
-//   const submitForm=(e)=>{
-//     e.preventDefault();
-//     const sendData={
-//       email:data.email,
-//       password:data.password,
 //     }
-//     setData({
-//       email:"",
-//       password:"",
-//     })
-//     axios.post('http://localhost/farm_marketplace/src/Backend/login.php',sendData)
-//     .then(res=> console.log(res.data))
-//     .then(navigate('/'))
-//     .then(res=>window.localStorage.setItem('name',res.data.name))
-//     .catch(error => {
-//       console.log(error.response)
-//   });
-//   }
-//   return (
-//     <div>
-//     <h3>Login</h3>
-//       <form onSubmit={submitForm} >
-//   <div className="mb-3">
-//     <label for="exampleInputEmail1" className="form-label">Email address</label>
-//     <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email"  onChange={handleChange} value={data.name}/>
-//     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-//   </div>
-//   <div className="mb-3">
-//     <label for="exampleInputPassword1" className="form-label">Password</label>
-//     <input type="password" className="form-control" id="exampleInputPassword1" name='password' onChange={handleChange} value={data.name}/>
-//   </div>
-//   <div className="mb-3 form-check">
-//     <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-//     <label className="form-check-label" for="exampleCheck1">Check me out</label>
-//   </div>
-//   <button type="submit" className="btn btn-primary">Submit</button>
-// </form>
-//     </div>
-//   );
+//     handleChange = event => {
+//         this.setState({ [event.target.name]: event.target.value });
+//     };
+//     handleSubmit = event => {
+//         event.preventDefault();
+//         var that = this;
+        
+//         fetch('http://localhost:5000/www/login.php', {
+//         // fetch('http://localhost/backend/login.php', {
+//             method: 'POST',
+//             headers: {
+//             'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 Email: this.state.email,
+//                 Password: this.state.password
+//             }) 
+//         })
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(function (data) {
+//             if(data.status){
+//                 sessionStorage.setItem("id", data.UserId);
+//                 sessionStorage.setItem("name", data.FirstName);
+//                 sessionStorage.setItem("typeOfAccount", data.TypeAccount);
+//                 sessionStorage.setItem("accountID", data.accountID);
+//                that.setState({...that.state, message: data.message})
+//                window.location.replace("/");
+//             }else{
+//                 that.setState({...that.state, message: 'Invalid user'})
+//             }
+            
+//         });
+//     }; 
+
+
+// render() {
+//     return (
+//         <Container>
+//             <img src={logoMarket} className="farmLogin" alt="logo" />
+//             <form className="formLogin" onSubmit={this.handleSubmit}>
+//                 <label htmlFor="email">Email </label> 
+//                 <input className = "loginInput" type="text" name="email" placeholder="email" value={this.state.username} onChange={this.handleChange} required/>
+//                 <br/>
+//                 <label htmlFor="password">Password </label> 
+//                 <input className = "loginInput" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange}required/>
+//                 <br/>
+//                 <button type="submit">Login</button>
+//                 <p>{this.state.message}</p>
+//             </form>
+//             <Link className='linkTo' to="/createAccount">Create Account</Link>
+//             {/* <Link className='linkTo' to="/www/createAccount">Create Account</Link> */}
+
+//         </Container>
+//     );
+//     }
 // }
 
-// export default Login;
+//    export default Login; 
+
