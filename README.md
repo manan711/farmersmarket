@@ -32,9 +32,9 @@ Farm Marketplace is a project developed for the Web Technologies class of the Mo
 
 ## Features
 
-- Create user types farmer and customer.
+- Create user types `farmer` and `customer`.
 
-<img src="./files_readme/dijkstra.gif" title="Dijkstra" width="350" height="350">
-- 
+<img src="./files_readme/user_create.gif" title="Dijkstra" width="500" height="250">
+- Login
 
 ## Future work
