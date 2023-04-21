@@ -63,6 +63,10 @@ button {
   }
 
   #rightProductCard{
+    
+  }
 
+  .ImgItem{
+    width: 195px;
   }
 `;
